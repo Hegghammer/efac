@@ -1,0 +1,29 @@
+Filename,Rows,Variable name,Missingness,Explanation
+documents.csv,,,,
+,,filename,,
+,,meeting_id,,
+,,date,,
+,,doctitle,,
+,,url,,
+,,text,,
+attendees.csv,,,,
+,,meeting_id,,
+,,person_id,,
+,,chairman,,
+,,title,,
+,,organization,,Some affiliations could not be retrieved.
+,,category,,
+,,party,,Only politicians have a party value.
+,,spoke,,
+persons.csv,,,,
+,,person_id,,
+,,lastname,,
+,,firstname,,Some firstnames could not be retrieved.
+,,gender,,
+,,pid,,"Only MPs in Fiva et al. have a pid."
+remarks.csv,,,,
+,,meeting_id,,
+,,person_id,,18 remarks are unattributed or attributed to a group.
+,,index,,
+,,remark,,
+,,lang,,

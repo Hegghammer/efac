@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the article and dataset below."
+title: "Declassified transcripts from Norway's Extended Foreign Affairs Committee 1924-1992"
+type: software
+authors:
+  - family-names: Hegghammer
+    given-names: Thomas
+  - family-names: Braut-Hegghammer
+    given-names: Malfrid
+repository-code: "https://github.com/Hegghammer/efac"
+license: MIT
+preferred-citation:
+  type: dataset
+  title: "EFAC Dataset 1924-1992"
+  authors:
+    - family-names: Hegghammer
+      given-names: Thomas
+    - family-names: Braut-Hegghammer
+      given-names: Malfrid
+  year: 2026
+  doi: 10.5281/zenodo.19052379
+  url: "https://doi.org/10.5281/zenodo.19052379"

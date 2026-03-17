@@ -1,0 +1,921 @@
+---
+title: |
+  Declassified transcripts from Norway's Extended Foreign Affairs Committee 1924–1992
+author:
+  - name: Thomas Hegghammer
+    corresponding: true
+    orcid: 0000-0001-6253-1518
+    email: thomas.hegghammer@all-souls.ox.ac.uk
+    affiliation: University of Oxford
+  - name: Målfrid Braut-Hegghammer
+    orcid: 0009-0005-5346-6001
+    email: malfrid.braut_hegghammer@kcl.ac.uk
+    affiliation: King's College London
+date: today
+date-format: D MMMM YYYY
+abstract-title: "Abstract:"
+abstract: |
+  Government deliberations on sensitive foreign and defence matters are usually hidden from public view. We present a text dataset containing the declassified verbatim transcriptions of 68 years' worth of meetings in the Norwegian Parliament's Extended Foreign Affairs Committee, where government ministers and select parliamentarians discuss the country's most pressing foreign policy challenges. The dataset contains around 6.3 million words parsed into 28,648 speaker turns from 642 meetings between 1924 and 1992. It includes attendance records for the 1,020 individuals who ever attended a meeting, whether they spoke or not. The dataset provides a granular record of closed-door deliberations at the highest level of government, shedding light on what was debated, how things were discussed, and who shaped the conversation on a broad range of international events from the interwar period to the post-Cold War era.
+execute:
+  echo: false
+  warning: false
+  message: false
+number-sections: true
+bibliography: refs.bib
+csl: nature.csl
+link-citations: true
+format:
+  pdf: 
+    pdf-engine: pdflatex
+    toc: false
+    keep-tex: true
+    fontsize: 12pt
+    linestretch: 2
+    mainfont: "Latin Modern Roman"
+    hyperrefoptions:
+      - bookmarks=false
+      - hyperfootnotes=true
+    include-in-header:
+      text: |
+        \usepackage{titling}
+        \usepackage{pmboxdraw}
+        \posttitle{\par\end{center}\vspace{1.2\baselineskip}}
+        \setkomafont{disposition}{\normalfont\bfseries}
+        \setkomafont{title}{\normalfont\LARGE\bfseries}
+        \setkomafont{section}{\normalfont\Large\bfseries}
+        \setkomafont{subsection}{\normalfont\large\bfseries}
+        \setkomafont{subsubsection}{\normalfont\normalsize\bfseries}
+        \setlength{\parindent}{1.5em}
+        \setlength{\parskip}{0pt}
+        \renewenvironment{abstract}{%
+          \par\vspace*{1\baselineskip}%
+          \begin{center}\textbf{\abstractname}\end{center}\medskip
+          \begingroup
+          \begin{center}\begin{minipage}{0.88\textwidth}\small
+          \setlength{\parindent}{0pt}%
+          \noindent
+          \ignorespaces
+        }{%
+          \par\end{minipage}\end{center}\endgroup
+        }
+    include-before-body: 
+      text: |
+        \newpage
+  typst:
+    citeproc: true
+    toc: false
+    include-in-header: 
+      text: |
+        #set text(hyphenate: false)
+        #show link: set text(fill: rgb(0, 0, 255))
+        #show "https://doi.org/": w => {str.from-unicode(160)}
+    include-before-body: 
+      text: |
+        #pagebreak()
+        #set heading(numbering: "1.1.1")
+        #set text(top-edge: 0.7em, bottom-edge: -0.3em)
+        #set par(leading: 1em)
+        #show figure.caption: set text(size: 9pt)
+        #set par(first-line-indent: 1em)
+        #set par(first-line-indent: 1em)
+        #show link: it => underline(text(fill: blue, it))
+        #show super: set text(fill: blue)
+---
+
+```{r}
+#| label: load-data
+library(lubridate)
+library(tinytable)
+library(tidyverse)
+library(scales)
+library(glue)
+library(tokenizers)
+library(patchwork)
+library(magick)
+
+df_person <- read_csv("csv/persons.csv", show_col_types = FALSE)
+
+df_pagecounts <- read_csv("csv/pagecounts.csv", show_col_types = FALSE) |>
+  mutate(filename = as.character(filename), pagecount = as.integer(pagecount))
+
+df_docs <- read_csv("csv/documents.csv", show_col_types = FALSE) |>
+  left_join(df_pagecounts, by = "filename") |>
+  mutate(
+    wordcount = count_words(text),
+    year = year(date)
+  )
+
+df_remark <- read_csv("csv/remarks.csv", show_col_types = FALSE) |>
+  mutate(wordcount = count_words(remark)) |>
+  left_join(df_docs |> select(meeting_id, date) |> distinct(), by = "meeting_id") |>
+  mutate(year = year(date))
+
+df_attend <- read_csv("csv/attendees.csv", show_col_types = FALSE) |>
+  left_join(df_docs |> select(meeting_id, date) |> distinct(), by = "meeting_id") |>
+  mutate(year = year(date))
+
+df_turns_by_meeting <- df_remark |>
+  mutate(meeting_id = as.character(meeting_id)) |>
+  group_by(meeting_id) |>
+  summarize(remarks_rows = n(), .groups = "drop")
+
+df_validation <- read_csv("csv/validation_human.csv", show_col_types = FALSE)
+
+df_validation_metrics <- read_csv("csv/validation_metrics.csv", show_col_types = FALSE)
+
+df_redacted_pages <- read_csv("csv/redacted_pages.csv", show_col_types = FALSE) |>
+  mutate(
+    filename = as.character(filename),
+    pages_redacted = as.character(pages_redacted)
+  )
+
+validation_docs <- df_validation |>
+  distinct(meeting_id, filename) |>
+  mutate(
+    meeting_id = as.character(meeting_id),
+    filename = as.character(filename)
+  )
+
+df_validation_docs <- df_docs |>
+  mutate(
+    meeting_id = as.character(meeting_id),
+    filename = as.character(filename)
+  ) |>
+  semi_join(validation_docs, by = c("meeting_id", "filename"))
+
+df_coverage_gaps <- df_docs |>
+  mutate(
+    meeting_id = as.character(meeting_id),
+    redacted_pdf = str_detect(str_to_lower(filename), "sladda") & meeting_id != "199008220"
+  ) |>
+  left_join(df_redacted_pages, by = "filename") |>
+  left_join(df_turns_by_meeting, by = "meeting_id") |>
+  mutate(remarks_rows = replace_na(remarks_rows, 0L)) |>
+  left_join(
+    df_attend |>
+      mutate(meeting_id = as.character(meeting_id)) |>
+      group_by(meeting_id) |>
+      summarize(attendees_rows = n(), .groups = "drop"),
+    by = "meeting_id"
+  ) |>
+  mutate(attendees_rows = replace_na(attendees_rows, 0L)) |>
+  mutate(
+    redacted_pages = case_when(
+      redacted_pdf ~ paste0(replace_na(pages_redacted, "NA"), "/", pagecount),
+      TRUE ~ NA_character_
+    ),
+    issue_type = case_when(
+      meeting_id == "192606180" ~ "paraphrased_remarks",
+      redacted_pdf & remarks_rows == 0 ~ "redacted_and_no_parseable_remarks",
+      redacted_pdf ~ "partial_redaction",
+      remarks_rows == 0 ~ "no_parseable_remarks",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(issue_type)) |>
+  select(meeting_id, filename, issue_type, remarks_rows, attendees_rows, redacted_pages)
+
+df_coverage_gaps <- bind_rows(
+  tibble(
+    meeting_id = "195305070",
+    filename = "NA",
+    issue_type = "missing_document",
+    remarks_rows = 0L,
+    attendees_rows = 0L,
+    redacted_pages = NA_character_
+  ),
+  df_coverage_gaps
+) |>
+  arrange(meeting_id)
+
+df_coverage_gaps_display <- df_coverage_gaps |>
+  mutate(
+    meeting_id = if_else(meeting_id == "195305070", "195305070*", meeting_id),
+    issue_type = recode(
+      issue_type,
+      missing_document = "missing document",
+      paraphrased_remarks = "paraphrased remarks",
+      no_parseable_remarks = "no parseable remarks",
+      partial_redaction = "partly redacted",
+      redacted_and_no_parseable_remarks = "fully redacted"
+    )
+  ) |>
+  select(meeting_id, issue_type, redacted_pages, remarks_rows, attendees_rows)
+
+# Core manuscript counts -----------------------------------------------------
+n_docs <- nrow(df_docs)
+n_pre76 <- df_docs |>
+  filter(year < 1976) |>
+  nrow()
+n_post75 <- df_docs |>
+  filter(year > 1975) |>
+  nrow()
+n_meetings <- df_docs |>
+  filter(!is.na(meeting_id)) |>
+  distinct(meeting_id) |>
+  nrow()
+pgcount_min <- min(df_docs$pagecount, na.rm = TRUE)
+pgcount_max <- max(df_docs$pagecount, na.rm = TRUE)
+pgcount_median <- median(df_docs$pagecount, na.rm = TRUE)
+
+# Identity resolution diagnostics --------------------------------------------
+n_attendees_unresolved <- df_attend |>
+  filter(is.na(person_id) | person_id == "") |>
+  nrow()
+n_attendees_unresolved_pct <- n_attendees_unresolved / nrow(df_attend) * 100
+n_attendees_unresolved_meetings <- df_attend |>
+  filter(is.na(person_id) | person_id == "") |>
+  summarize(n = n_distinct(meeting_id)) |>
+  pull(n)
+n_remarks_unresolved <- df_remark |>
+  filter(is.na(person_id) | person_id == "") |>
+  nrow()
+n_remarks_unresolved_pct <- n_remarks_unresolved / nrow(df_remark) * 100
+n_remarks_unresolved_meetings <- df_remark |>
+  filter(is.na(person_id) | person_id == "") |>
+  summarize(n = n_distinct(meeting_id)) |>
+  pull(n)
+n_attendees_unresolved_pct_2d <- sprintf("%.2f", n_attendees_unresolved_pct)
+n_remarks_unresolved_pct_2d <- sprintf("%.2f", n_remarks_unresolved_pct)
+
+# Validation sample coverage --------------------------------------------------
+n_validation_docs <- nrow(df_validation_docs)
+pct_validation_docs <- n_validation_docs / n_docs * 100
+validation_doc_median_pages <- median(df_validation_docs$pagecount, na.rm = TRUE)
+validation_doc_median_words <- median(df_validation_docs$wordcount, na.rm = TRUE)
+corpus_doc_median_words <- median(df_docs$wordcount, na.rm = TRUE)
+corpus_remark_chars <- sum(nchar(df_remark$remark), na.rm = TRUE)
+validation_chars <- df_validation_metrics$validation_chars[[1]]
+pct_validation_chars <- validation_chars / corpus_remark_chars * 100
+
+# Validation outcomes loaded from script output -------------------------------
+n_validation_remarks <- df_validation_metrics$n_validation_remarks[[1]]
+n_char_edits <- df_validation_metrics$n_char_edits[[1]]
+n_exact_match <- df_validation_metrics$n_exact_match[[1]]
+n_adjacent_pairs <- df_validation_metrics$n_adjacent_pairs[[1]]
+n_swap_signatures <- df_validation_metrics$n_swap_signatures[[1]]
+
+# Derived validation statistics ----------------------------------------------
+cer <- n_char_edits / validation_chars
+cer_ci <- binom.test(n_char_edits, validation_chars)$conf.int
+char_accuracy <- 1 - cer
+char_accuracy_ci <- c(1 - cer_ci[2], 1 - cer_ci[1])
+exact_match_rate <- n_exact_match / n_validation_remarks
+exact_match_ci <- binom.test(n_exact_match, n_validation_remarks)$conf.int
+aser <- n_swap_signatures / n_adjacent_pairs
+aser_ci_upper <- binom.test(n_swap_signatures, n_adjacent_pairs)$conf.int[2]
+
+# Display formatting helpers --------------------------------------------------
+pct_validation_docs_1d <- round(pct_validation_docs, 1)
+pct_validation_chars_1d <- round(pct_validation_chars, 1)
+validation_chars_fmt <- format(validation_chars, big.mark = ",", scientific = FALSE)
+validation_doc_median_words_fmt <- format(round(validation_doc_median_words), big.mark = ",", scientific = FALSE)
+corpus_doc_median_words_fmt <- format(round(corpus_doc_median_words), big.mark = ",", scientific = FALSE)
+n_validation_remarks_fmt <- format(n_validation_remarks, big.mark = ",", scientific = FALSE)
+n_char_edits_fmt <- format(n_char_edits, big.mark = ",", scientific = FALSE)
+cer_pct_2d <- sprintf("%.2f", cer * 100)
+cer_ci_pct <- sprintf("%.2f-%.2f", cer_ci[1] * 100, cer_ci[2] * 100)
+char_accuracy_pct_2d <- sprintf("%.2f", char_accuracy * 100)
+char_accuracy_ci_pct <- sprintf("%.2f-%.2f", char_accuracy_ci[1] * 100, char_accuracy_ci[2] * 100)
+exact_match_pct_2d <- sprintf("%.2f", exact_match_rate * 100)
+exact_match_ci_pct <- sprintf("%.2f-%.2f", exact_match_ci[1] * 100, exact_match_ci[2] * 100)
+aser_pct_2d <- sprintf("%.2f", aser * 100)
+aser_ci_upper_pct_2d <- sprintf("%.2f", aser_ci_upper * 100)
+```
+
+## Background and Summary
+
+The most consequential decisions in international politics are usually made behind closed doors. When wars loom or crises unfold, politicians may reveal some of their thinking in open channels, but the really substantive discussions happen in classified settings such as cabinet meetings, national security councils, and closed parliamentary hearings. In most countries, records of such meetings are never made available in full to the public, complicating the task of social scientists and historians seeking to understand the mechanics of foreign policy decision-making.
+
+We present a dataset of speaker-segmented transcripts from the Extended Foreign Affairs Committee (EFAC) in the Norwegian Parliament from 1924 through 1992, complemented by attendance metadata for all meetings in the period. EFAC is an arena for consultation between the government and Parliament on the country's most pressing foreign relations and defence issues. Its meetings are closed, but the transcripts are routinely declassified after 30-40 years. To our knowledge, EFAC is the only closed-door, cabinet-level foreign policy forum for which decades of systematic transcript data are publicly available. We combine machine learning tools with careful manual review to transform image scans of the original records into a dataset with speaker turn segmentation, speaker identification, and meeting-level attendance data.
+
+The transcripts cover a broad range of issues -- essentially whichever foreign policy matter was the most pressing at any given time. Among the hundreds of topics discussed are Norway's dispute with Denmark over Greenland (early 1930s), relations with fascist Germany, Italy, and Spain (late 1930s), the establishment of the UN and NATO (late 1940s), the use and positioning of nuclear weapons (early 1950s), the Suez crisis (mid-1950s), relations with the European Economic Community (early 1960s), positions on the Vietnam war and apartheid South Africa (late 1960s), the 1973 oil crisis, Arctic sea border disputes with the Soviet Union (late 1970s), the coup in Turkey and war in Lebanon (early 1980s), trade negotiations with EFTA and GATT (late 1980s), and the Gulf War and the fall of the Soviet Union (early 1990s).
+
+### Institutional setting and historical background
+
+In comparative political terms, the Extended Foreign Affairs Committee is a somewhat unusual institution in that it sits between the legislative and the executive and formally decides neither policy nor legislation. Norway already has a regular Foreign Affairs Committee in Parliament as well as something akin to a national security council in government (*Regjeringens sikkerhetsutvalg*, The Government Security Committee), so EFAC plays a different role: that of a confidential consultation platform where the government can politically anchor its foreign policy in Parliament and Parliament can obtain information about important processes currently being handled by the executive. Governments take the Committee seriously and bring most of the country's most pressing foreign policy issues before it. As a result, EFAC is widely considered Norway's preeminent arena for strategic discussion among foreign policy elites on foreign affairs, defence, and international trade.[@sjaastad2006stortingetsom; @syse2009trekkav] 
+
+The Committee convenes on average around 10 times per year at irregular intervals -- essentially whenever the Foreign Affairs Committee or the Government asks for it. Attendees typically number between 20 and 30 and include members of the Foreign Affairs Committee, the Speaker of Parliament, the leaders of all party factions in Parliament, and one or more government ministers, often accompanied by senior civil servants. @fig-desc shows the frequency, length and number of attendees in EFAC meetings up to 1992.
+
+```{r}
+#| label: meeting-stats
+#| results: hide
+
+fs_axis_text <- 6
+fs_axis_title <- 8
+fs_tag <- 12
+lw <- 0.3
+x_breaks <- seq(1920, 1990, 10)
+
+meeting_year_counts <- df_remark |>
+  distinct(meeting_id, year) |>
+  count(year, name = "meetings")
+
+meeting_year_words <- df_remark |>
+  group_by(meeting_id, year) |>
+  summarize(meet_wordcount = sum(wordcount), .groups = "drop") |>
+  group_by(year) |>
+  summarize(year_avg_wordcount = mean(meet_wordcount), .groups = "drop")
+
+meeting_year_attendees <- df_attend |>
+  count(meeting_id, name = "n_attendees") |>
+  left_join(df_docs |> distinct(meeting_id, year), by = "meeting_id") |>
+  group_by(year) |>
+  summarize(mean_attendees = mean(n_attendees), .groups = "drop")
+
+base_theme <- theme_minimal() +
+  theme(
+    axis.text = element_text(face = "bold", size = fs_axis_text),
+    axis.title = element_text(size = fs_axis_title)
+  )
+
+scale_year <- scale_x_continuous(limits = c(1920, 1992), breaks = x_breaks)
+
+p1 <- meeting_year_counts |>
+  ggplot(aes(year, meetings)) +
+  geom_col() +
+  geom_smooth(linewidth = lw) +
+  scale_year +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(x = "Year", y = "Meetings") +
+  base_theme
+
+p2 <- meeting_year_words |>
+  ggplot(aes(year, year_avg_wordcount)) +
+  geom_col() +
+  geom_smooth(linewidth = lw) +
+  scale_y_continuous(breaks = seq(0, 25000, 5000)) +
+  scale_year +
+  labs(x = "Year", y = "Words") +
+  base_theme
+
+p3 <- meeting_year_attendees |>
+  ggplot(aes(year, mean_attendees)) +
+  geom_col() +
+  geom_smooth(linewidth = lw) +
+  scale_year +
+  scale_y_continuous(limits = c(0, NA)) +
+  labs(x = "Year", y = "Attendees") +
+  base_theme
+
+p1 <- p1 + labs(tag = "a)") + theme(plot.tag = element_text(size = fs_tag))
+p2 <- p2 + labs(tag = "b)") + theme(plot.tag = element_text(size = fs_tag))
+p3 <- p3 + labs(tag = "c)") + theme(plot.tag = element_text(size = fs_tag))
+
+fig_desc <- p1 + p2 + p3
+ggsave("figs/fig-desc-overhang.pdf", plot = fig_desc, width = 9.5, height = 2.2, units = "in")
+ggsave("figs/fig-desc-overhang.png", plot = fig_desc, width = 9.5, height = 2.2, units = "in", dpi = 300)
+```
+
+::: {#fig-desc}
+```{=latex}
+\makebox[\linewidth][c]{\includegraphics[width=1.3\linewidth]{figs/fig-desc-overhang.pdf}}
+```
+```{=typst}
+#align(center, image("figs/fig-desc-overhang.png", width: 130%))
+```
+Meeting characteristics over time. Meeting counts (a), average meeting transcript length (b), and average number of attendees per meeting (c).
+:::
+
+The content of EFAC meetings was long shrouded in a veil of secrecy. Even though verbatim records existed thanks to the consistent use of stenographers, standard practice in the first 70 years of the Committee's history was for the transcripts to remain classified. Then, in the mid-1990s, during a period of post-Cold War *détente* and domestic political appetite for openness, the Presidium of Parliament recommended that records of closed parliamentary meetings from 1917 to 1965 be declassified and that subsequent records routinely be made public after 30 years.[@stortingetspresidentskap1995innstillingfra; @stortingetspresidentskap1996innstillingfra] Since then, EFAC transcripts have been regularly declassified with a 30-35 year lag in batches covering 5-6 years. In the early 2010s, Parliament also started making the PDFs of old transcripts available online.[@avgradertedokumenter] The last batch, covering the period 1986-1992, was published in late 2025.[@2024lukkedemoter]
+
+The archive has drawn some attention from Norwegian researchers in the past. Before it was declassified and digitized, parts of the collection were occasionally made available to historians for projects such as Blom's study of the 1930s Greenland debate [@blom1973kampenom], Eriksen's and Tamnes's histories of Norwegian foreign policy from 1945 to 1965 [@eriksen1997kaldkrig] and 1965 to 1997 [@tamnes1997norskutenrikspolitikks] respectively, Tamnes's history of Norway's nuclear weapons policy from 1945 to 1970 [@kjetilskogrand2001fryktenslikevekt], and Løvold's history of the Extended Foreign Affairs Committee itself.[@lovold2002innenriksutenriks] However, the digitized collection has not been widely exploited, some exceptions notwithstanding.[@egeland2025cosmicbluff] And in the absence of a plaintext version, there has been no computational work on this corpus.
+
+### Reuse value
+
+The EFAC Dataset joins a fast-growing body of scientific datasets on political speech. Although text-as-data approaches to the study politics have existed for some time [@laver2003extractingpolicy] [@grimmer2013textdata], the machine learning revolution of the 2010s superpowered the production of political text datasets, especially from parliamentary settings. The past decade has seen the publication of corpora from Australia [@katz2023digitizationaustralian], Britain [@eggers2014electoralsecurity], Canada [@beelen2017digitizationcanadian], Denmark [@navarretta2022subjectannotations], Finland [@simola2025finnishparliamentary], Germany [@lange2023speakgermetadata], Greece [@dritsa2022greekparliament], Italy [@cova2025newdatabase], Netherlands [@marx2010dutchparlcorpus], Norway [@fiva2025norwegianparliamentary], Portugal [@sousa2024ptparlvportuguese], Turkey [@yildirim2024republiccentennial], and the United States [@tucker2020datascience] [@hiray2024cocohdcongress], in addition to aggregated datasets from multiple countries.[@kuzman2023linguisticallyannotated] [@rauh2017parlspeechdata] Recent efforts have ventured outside parliamentary setting to include campaign materials [@chalkiadakis2025textdataset] [@lim2025southkorean], public debates [@cruz2025annotatedspanish] [@rennard2023fredsumdialogue], and other venues for political communication. Although few datasets focus specifically on foreign policy discussions, such discussions feature in many of the abovementioned datasets because they are part of the regular business of most parliaments.
+
+What sets the EFAC Dataset apart is that it captures what politicians said behind closed doors, thereby offering a less filtered view into the latter's viewpoints and positions than statements made in public. Given that no EFAC transcript was declassified before the mid-1990s, it is reasonable to assume that meeting participants in the 1924-1992 period spoke relatively freely, on the assumption that their remarks would not reach the public domain in their lifetime. Material of this nature is rare, especially for long time series. To our knowledge, there is currently no other text dataset from any country that contains formerly classified, cabinet-level foreign policy conversations from a similarly long time period. 
+
+The content has relevance for research in a range of fields. Scholars of International History and International Relations might find it particularly useful as a window into the ways in which leaders of a NATO country perceived world events throughout the Cold War as well as the calculations they made with regard to alliance partners, trade competitors, and military rivals. Political scientists working on comparative government and parliamentary politics might want to use it to study decision making processes, power dynamics, and ideological shifts within Norwegian and European politics. The speaker identification in the EFAC dataset allows for integration with existing datasets such as Fiva et al's Norwegian Parliamentary Speeches Dataset [@fiva2025norwegianparliamentary] and Fiva and Smith's Norwegian Parliamentary Election Dataset [@fiva2017norwegianparliamentary], as well as with Søyland's R package *Stortingscrape*.[@soyland2025stortingscrape] This can in turn open up for inquiries into topics such as the differences between open- and closed-door political speech, the biographical correlates of foreign policy attitudes, or the evolution of particular politicians' views and positions over time. The material might also interest scholars from disciplines further afield. Linguists and specialists in Natural Language Processing might want to probe the features of political speech in closed or small group settings. Scholars in Psychology, Organizational Behaviour, or Gender Studies might use the dataset to study the interpersonal dynamics of high-level meetings.
+
+## Methods
+
+The dataset was built from a collection of `r n_docs` PDF files retrieved from the Norwegian Parliament's official website. The compilation involved six stages: data collection, document inspection, text extraction, speaker turn segmentation, speaker identification, and attendee identification.
+
+### Collection
+
+We started by recursively scraping the official webpage holding the EFAC PDFs.[@2024lukkedemoter] Of the `r n_docs + 2` PDFs available on the webpage, we discarded two that were not meeting transcripts but rather background documents (a draft declaration for the 8 March 1989 meeting and a background brief for the 16 Jan 1992 meeting). We also cropped one document (`1990_0822-ss.-401-616_sladda_.pdf`) which contained a series of four meetings, the last three of which feature in other PDFs, suggesting an unintentional digitization error. We cropped this file to include only the transcript of the first meeting. Otherwise we kept all PDF files as they are and used them as source material for this dataset.
+
+In addition to holding links to the PDF files, the online repository contains a small number of document descriptors, such as the date and time of the meeting as well as a brief summary of the contents. We scraped this information and included it as metadata (`url`, `filename`, `date`, `doctitle`) in a CSV file (`documents.csv`) that has PDF files as rows. We do not include a `time` variable because only about ten percent of documents include meeting start time. Users who wish to obtain the available time information can do so by parsing the document preambles.
+
+We then added a `meeting_id` variable to the CSV file. In most cases, a PDF corresponds to a meeting, but there are two cases of a single meeting being split over two PDFs, which case the two PDFs share meeting ID. There are also 16 pairs of transcripts from sessions that took place on the same day, typically separated by lunch. In these cases we treat morning and afternoon sessions as separate meetings because they have separate preambles (even though, in terms of contents, some of the afternoon sessions continued where the morning meeting left off). 
+
+### Document inspection
+
+The transcripts are structured similarly throughout the 68-year period: a preamble with meeting information at the top of the first page, followed by several pages of transcribed remarks. All the documents are in Norwegian, and the length ranges from `r pgcount_min` to `r pgcount_max` pages with `r pgcount_median` as the median. 
+
+The PDF files form two distinct groups in terms of file format. One group of `r n_pre76` PDFs from the 1924-1975 period are digital printouts from Word files (see @fig-pics a), suggesting that the original paper transcripts from 1924 to 1975 were typed up on a computer and then printed to PDF. Technical metadata in the PDF files suggest that the typing was carried out between 1999 and 2001. These PDFs contain embedded text and are searchable.
+
+The other group of `r n_post75` PDFs from the 1976-1992 period are colour scans of the original paper transcripts (see @fig-pics b). Here, unlike in the typed up documents, we can observe original features such as a red "SECRET" stamp in the top right corner of each page and short parenthetical expressions -- such as "(KL)" and "(GSR)", perhaps stenographer initials -- in the left margin. These PDFs are effectively images and are not searchable. 
+
+```{r}
+#| label: facsimiles
+#| results: hide
+panel_width_px <- 1400
+tag_size_px <- 44
+tag_margin_px <- 120
+tag_location <- "+20+20"
+panel_border <- "2x2"
+
+facsimile_sources <- tribble(
+  ~path, ~tag,
+  "figs/560525u_frontpage_1200dpi.png", "a)",
+  "figs/1985_1205_frontpage_1200dpi.png", "b)"
+)
+
+build_facsimile_panel <- function(path, tag) {
+  img <- image_read(path) |>
+    image_resize(paste0(panel_width_px, "x")) |>
+    image_border("grey70", panel_border)
+
+  info <- image_info(img)
+
+  img |>
+    image_extent(
+      paste0(info$width + tag_margin_px, "x", info$height + tag_margin_px),
+      gravity = "southeast",
+      color = "white"
+    ) |>
+    image_annotate(tag, size = tag_size_px, location = tag_location, weight = 100)
+}
+
+facsimile_panels <- map2(facsimile_sources$path, facsimile_sources$tag, build_facsimile_panel)
+
+do.call(c, facsimile_panels) |>
+  image_append() |>
+  image_write("figs/facsimiles.png", format = "png", density = 600)
+```
+
+::: {#fig-pics}
+```{=latex}
+\makebox[\linewidth][c]{\includegraphics[width=1.15\linewidth]{figs/facsimiles.png}}
+```
+```{=typst}
+#align(center, image("figs/facsimiles.png", width: 115%))
+```
+Facsimiles of source PDFs. First page of transcript of 25 May 1956 meeting (a); first page of transcript of 5 December 1985 meeting (b).
+:::
+
+The transcripts appear to be accurate and complete renderings of what was said in the meetings. Informal language, interrupted sentences, collective outbursts, and side comments are included, as are some non-verbal events, such as "Speaker X withdrew his comment." Only in one case is a speaker's remark effectively blank (a series of dashes), presumably due to inaudibility or stenographer error.
+
+At the current time of writing, the transcript of one meeting -- that of 7 May 1953 -- is missing from both the online and the physical archive. From published metadata we know the title of the meeting -- "Declaration by Defence Minister Langelle regarding the question of wartime delegation of authority to the head of the Northern Command". This is a highly sensitive topic as it concerns wartime command and control in the nuclear era, so it is conceivable that the document has been withheld from public view. We have asked the Parliamentary Archive for a clarification and are awaiting their response. 
+
+It must also be noted that eighteen of the PDFs from the 1986-1992 period remain partially redacted. The extent of the redaction varies; for some documents the entire meeting except the preamble and the closing remarks is blacked out; in others it affects only one item on the agenda. Item titles are also blacked out, so the topics cannot be retrieved; we can only see how many pages are redacted and who was present at the meeting. Although the number of classified pages is low, the fact that they were classified suggests they are particularly high-interest. However, EFAC documents are reviewed for declassification every few years, so these documents are likely to be made available in full in the future (email correspondence with Parliamentary Archivist Egil Borlaug, 8 December 2025).
+
+@tbl-coverage-gaps summarizes coverage gaps at meeting level, including all currently redacted meetings and the one known missing document.
+
+`#set text(size: 8pt)`{=typst}
+
+`\begingroup\setstretch{1}`{=latex}
+
+```{r}
+#| label: tbl-coverage-gaps
+#| tbl-cap: Coverage gaps and redaction-related limitations at meeting level.
+#| tbl-pos: H
+
+coverage_tbl <- df_coverage_gaps_display |>
+  rename(
+    `Meeting` = meeting_id,
+    `Issue` = issue_type,
+    `Pages redacted` = redacted_pages,
+    `Remarks` = remarks_rows,
+    `Attendees` = attendees_rows
+  )
+
+tt(coverage_tbl, escape = TRUE) |>
+  theme_typst() |>
+  style_tt(background = "grey90", fontsize = 0.7) |>
+  style_tt(i = 0, bold = TRUE)
+```
+
+`\begin{center}\begin{minipage}{0.82\linewidth}\footnotesize\noindent Note: \texttt{195305070*} is a placeholder ID constructed from the known meeting date (7 May 1953) for a transcript that is missing from both the online and physical archive; it is not an observed \texttt{meeting\_id} in the dataset files.\end{minipage}\end{center}`{=latex}
+
+`Note: 195305070\* is a placeholder ID constructed from the known meeting date (7 May 1953) for a transcript that is missing from both the online and physical archive; it is not an observed meeting_id in the dataset files.`{=typst}
+
+`\endgroup`{=latex}
+
+`#set text(size: 10pt)`{=typst}
+
+### Text extraction
+
+The next step consisted of extracting the plaintext from the PDFs. Here we used Mistral OCR (`mistral-ocr-2505`), a visual language model finetuned for optical character recognition (OCR). Although the PDFs covering the years 1924 to 1975 were born-digital and therefore had the text hardcoded in the files, we observed irregularities in the embedded text of some of the PDFs and therefore opted to OCR the entire collection. We chose Mistral OCR after testing both local OCR engines, such as Tesseract and Surya, and proprietary ones, such as Google Document AI. Mistral OCR gave us the best combination of accuracy and parsimoniousness: Tesseract and Surya had lower accuracy, especially on the post-1975 documents, while Google Document AI had good accuracy overall, but captured headers and other unwanted elements on the page, which would have required more cleaning. We preserved the raw OCR output in a variable `text` in `documents.csv`.
+
+### Speaker turn segmentation
+
+Next, we parsed the OCR output to separate out individual remarks and the names of the speakers. Here we leveraged the fact that speaker names are consistently formatted throughout the document collection. That is to say, in the PDF files from 1924 through 1975, speaker names are in lowercase bold followed by a colon, while in the files from 1976 through 1992, they are in uppercase followed by a colon (some minor inconsistencies notwithstanding). To capture the bold font expressions in the pre-1976 PDFs we used Claude Opus 4.5 (`claude-opus-4-5-20251101`). To capture the uppercase speaker names in the post-1975 PDFs we used regular expressions. 
+
+In reality, the parsing was more complicated than this, because the original text contained typos, irregularities, and edge cases that were not captured by simple rules. For instance, in the post-1975 PDFs where speaker names were uppercase, there were potential false positives in the form of non-names in uppercase (e.g. "DAGSORDEN:" (agenda:)). Similarly, in the pre-1976 PDFs, speaker names were in bold, but so were many other expressions that were not names. To deal with this we developed parsing scripts iteratively: we would draft a script, run it, manually inspect for false positives and negatives and adjust the script until we could manually review ten random PDFs in a row without finding a parsing error.
+
+Having completed the speaker segmentation, we proceeded to clean the text of the remarks. First we wrote a script to remove unwanted elements such as page headers, the "HEMMELIG" (secret) stamp, page numbers, footnotes, and the like. Next, we standardized the use of Scandinavian letters by changing ö/Ö to ø/Ø and ä/Ä to æ/Æ. Finally, to weed out OCR errors, we applied a semi-automated spell-check procedure involving two steps. We started by writing a simplified noisy-channel spelling corrector [@kernighan-etal-1990-spelling] following Peter Norvig [@norvig2007spelling] that produced a list of candidate error words within edit distance 1 of words that feature more than 10 times. We then manually checked each candidate word and corrected where appropriate. Although labour intensive, this manual step was necessary to ensure that the correction algorithm itself did not unduly change the original transcript. Because the corpus covers nearly 70 years, it includes several Norwegian spelling standards, and a fully automated pipeline would have corrected word variants that were actually valid in their historical context.
+
+At this stage we also classified the language of each remark using the langid algorithm.[@langidpy] There are two major written forms of the Norwegian language -- "bokmål" (nb) and "nynorsk" (nn) -- and some transcripts have a mixture of remarks in bokmål and nynorsk. For some natural language processing tasks it may be useful to keep the two language forms apart, so we include a "lang" variable in our dataset with the classification results.
+
+### Speaker identification
+
+The third step consisted of transforming speaker names to full real names with individual-level metadata. This was a multifaceted problem. One challenge was that one and the same speaker might be referred to differently in different parts of the transcript; for example "Utenriksminister [Foreign Minister] Knut Frydenlund" on first reference, then variously "Utenriksminister Frydenlund" or "Statsråd [Cabinet Minister] Frydenlund". 
+A second difficulty was that first names were often omitted. Although not a problem for rare last names such as "Gerhardsen", it was a significant challenge for common names such as "Hagen" or "Andersen". A third problem was that some names were omitted altogether because identity was implicit. For instance, many transcripts refer only to "Formannen" (the Chairman) or "Utenriksministeren" (the Foreign Minister), with the person's name being mentioned only in the preamble of the document or sometimes nowhere in the document at all, requiring research in external sources to find out who was chairman or foreign minister at the time.
+
+We saw no way to automate the identification, because the pool of potential participants was open-ended. Most meetings had at least some external attendees, whether from the Government, the Civil Service, the private sector, or academia. Comprehensive biographical databases only exist for MPs and cabinet members, and even for these categories of participants, our experimentation with automated lookup yielded many errors due to the number of ambiguous last names and spelling divergences. We therefore chose to manually review all names and conduct manual research into every case that required it to ensure correct identification. In this process we employed a combination of regular search engines (Google), large language models with web search capability (Perplexity and Claude Opus 4.5), and manual consultation of printed books. 
+
+We followed a conservative identity-resolution protocol: when ambiguity remained after source triangulation, we left the identity unresolved rather than force a match. In the current release, `r n_attendees_unresolved` of `r nrow(df_attend)` attendance rows (`r n_attendees_unresolved_pct_2d`%; across `r n_attendees_unresolved_meetings` meetings) and `r n_remarks_unresolved` of `r nrow(df_remark)` remark rows (`r n_remarks_unresolved_pct_2d`%; across `r n_remarks_unresolved_meetings` meetings) have unresolved `person_id` values.
+
+### Attendee identification
+
+The next stage of the processing consisted of establishing who attended each meeting, which is of interest because not everyone who attended would speak. This was relatively straightforward for meetings after 1952, because the preambles of those transcripts include positive roll calls, meaning they explicitly list the name of everyone present. For these documents we proceeded in two steps: first we used a large language model (Claude Opus 4.5) to parse the preambles and get the available attendance information in structured form, then we conducted manual research to establish the identity of any ambiguous listings (of which there were many, because the preambles usually only mention people by their last name). 
+
+Compiling attendance data for pre-1953 meetings was more complicated because preambles in this period generally did not include positive roll calls. Instead they contain either 1) no attendance information at all, 2) only a mention of external attendees, 3) only a negative roll call ("everybody present except X and Y"), or 4) a combination of external attendee listing and negative roll call. For this period we therefore had to build a helper dataset on EFAC membership for the 1924-1952 period and infer attendance from it based on the assumption that all members were present unless cited as absent. This is a reasonable assumption for most meetings, because the majority of preambles in this period do have negative roll calls. Moreover, in this period the Committee was smaller, meetings less frequent, and attendance more costly for individuals -- for instance, transcripts speak of MPs from the north needing up to a week to travel to Oslo -- which gives reason to think absences were more likely to be recorded. Still, we cannot be fully confident that the assumption holds for every meeting, so the pre-1953 attendance data must be used with somewhat more caution than that of later years.
+
+For pre-1953 meetings, no external attendance source exists; attendance records are therefore inferred from committee membership and negative roll calls, and should be treated as lower-confidence metadata. We provide this variable for analytic utility, but recommend robustness checks that exclude pre-1953 attendance-based inferences.
+
+We built the helper dataset of early EFAC members manually from books containing biographies of MPs and lists of Parliamentary committee members.[@haffner1949stortingetog; @bjornstad1949stortingetog; @haffner1946stortinget19461949; @haffner1950stortinget19501953] The helper dataset had membership tenure events as rows and lastname, firstname, start date and end date as columns. We then wrote a script that returns a list of members on a given date and used this to fill out attendance data. Finally we manually vetted the attendance list for each meeting in this period to weed out errors and duplicates.
+
+The same conservative rule was applied in attendance coding: when ambiguity remained after source triangulation, identities were left unresolved (`person_id = NA`) rather than force-matched.
+
+Having identified attendees, we proceeded to compile biographical metadata on attendees. Our focus in the first instance was on the two variables 
+job title ("title") and job affiliation ("organization"), because they already featured in the transcripts for a substantial proportion of attendees. However, the terms used for various titles and organizations in the transcripts were inconsistent across time, and for some attendees they were missing altogether, so here, too, we conducted manual research to populate the variables. In doing so, we standardized some values. For instance, a foreign minister might be referred to variously as "Utenriksminister" and "Statsråd" (Cabinet minister); in these cases we chose to use "Statsråd" throughout (leaving the Foreign Ministry part to the organization variable). Similarly, some ministries had slightly different official names over the years; in these cases we chose to use the shortest and simplest form (e.g. "Handelsdepartementet" [Ministry of Trade] instead of "Nærings- og handelsdepartementet" [Ministry of Trade and Industry]). Moreover, when assigning values to the organization variable, we aggregated to the highest level in the administrative hierarchy, meaning, for example, that speakers described in the transcripts as representing "Forsvaret" (Armed Forces) would be assigned the organization value "Forsvarsdepartementet" (Ministry of Defence). For MPs we assigned the title value "Stortingsrepresentant" (MP) even though this term rarely features in the transcripts at all (MPs were simply referred to by their last name).
+
+Having established the full name, title, and affiliation of all attendees where this was retrievable, we added five more metadata variables. First we created a variable `category` for general category of affiliation/organization and ascribed each organization to one of seven categories: "Regjering" (Government), "Storting" (Parliament), "Embetsverk" (Civil Service), "Næringsliv" (private sector), "Akademia" (Academia), "Rettsvesen" (judiciary), and "Stortingssekretariat" (parliamentary secretariat). Next we added a `chairman` dummy variable to indicate who was chairing a given meeting; this was done programmatically by drawing on the preambles. We also added a "gender" variable based on first names (Norwegian has very few gender neutral or ambiguous first names, and we are not aware of any self-declared non-binary political figures from this historical period). We then added a `pid` variable linking all MPs who feature in Fiva et al.[@fiva2017norwegianparliamentary] to their entry in that dataset, to allow for the merging in of additional metadata. Finally we added a `party` variable. For MPs we merged in values from the party variable in Fiva et al. For government representatives who were not in Fiva et al (because they were never MPs) we added party values manually by consulting the database of past government members at regjeringen.no [@regjeringen-sok-regjeringer].
+
+## Data Record
+
+The data is accessible at Zenodo.[@efac-zenodo-2026] It consists of six files: four CSV files with the processed data plus two documentation files (`README.md` and `CODEBOOK.md`). See @fig-filetree-structure for an overview of the archive structure.
+
+::: {#fig-filetree-structure}
+```{=latex}
+\begin{center}
+\setlength{\fboxsep}{7pt}
+\colorbox{gray!10}{\begin{minipage}{0.86\linewidth}\ttfamily
+.\\
+├── remarks.csv\\
+├── documents.csv\\
+├── attendees.csv\\
+├── persons.csv\\
+├── CODEBOOK.md\\
+└── README.md
+\end{minipage}}
+\end{center}
+```
+
+```{=typst}
+#box(
+  fill: luma(242),
+  inset: 8pt,
+  radius: 3pt,
+  width: 86%,
+  [
+    #set text(font: "DejaVu Sans Mono", size: 9pt)
+    #raw(
+      block: true,
+      lang: "text",
+      ".\n├── remarks.csv\n├── documents.csv\n├── attendees.csv\n├── persons.csv\n├── CODEBOOK.md\n└── README.md"
+    )
+  ]
+)
+```
+Directory structure of the EFAC Dataset.
+:::
+
+Each CSV file is organised around a different unit of observation: `remarks.csv` has speaker turns as rows; `documents.csv` has PDF files as rows; `attendees.csv` has attendance events as rows, and `persons.csv` has individuals as rows. @tbl-vars lists the variables and value types in each CSV file, and @tbl-miss reports observation counts and missingness statistics.
+
+The four files are structured as database tables for minimal redundancy and easier maintenance. The linking variable `person_id` connects `remarks.csv`, `attendees.csv`, and `persons.csv` while the variable `meeting_id` connects `documents.csv`, `remarks.csv`, and `attendees.csv`. Values of `person_id` follow no particular logic other than being a five-digit integer above 90000, to be easy to distinguish from the values of `pid`. Values of `meeting_id` are made up of the date of the meeting in YYYYMMDD form plus a number from 0 to 9 representing the meeting's index on that date (because some days had more than one meeting). 
+
+```{r}
+#| label: tbl-vars
+#| tbl-cap: "Variable descriptions"
+df_vars <- read_csv("csv/variables.csv", show_col_types = FALSE) |>
+  mutate(across(everything(), ~ ifelse(is.na(.), "", .)))
+
+tt(df_vars, escape = TRUE) |>
+  style_tt(background = "grey90", fontsize = 0.7) |>
+  style_tt(i = 1:29, j = 1, bold = TRUE) |>
+  style_tt(i = 2:29, j = 2, italic = TRUE)
+```
+
+```{r}
+#| label: tbl-miss
+#| tbl-cap: "Missingness statistics"
+df_miss <- read_csv("csv/missingness.csv", show_col_types = FALSE) |>
+  mutate(across(everything(), ~ ifelse(is.na(.), "", .)))
+
+data_map <- list(
+  docs = df_docs,
+  attend = df_attend,
+  person = df_person,
+  remark = df_remark
+)
+
+row_specs <- tribble(
+  ~row, ~data,
+  1L, "docs",
+  8L, "attend",
+  17L, "person",
+  23L, "remark"
+)
+
+df_miss$Rows[row_specs$row] <- map_int(row_specs$data, ~ nrow(data_map[[.x]]))
+
+missing_specs <- tribble(
+  ~row, ~data, ~column,
+  2L, "docs", "filename",
+  3L, "docs", "meeting_id",
+  4L, "docs", "date",
+  5L, "docs", "doctitle",
+  6L, "docs", "url",
+  7L, "docs", "text",
+  9L, "attend", "meeting_id",
+  10L, "attend", "person_id",
+  11L, "attend", "chairman",
+  12L, "attend", "title",
+  13L, "attend", "organization",
+  14L, "attend", "category",
+  15L, "attend", "party",
+  16L, "attend", "spoke",
+  18L, "person", "person_id",
+  19L, "person", "lastname",
+  20L, "person", "firstname",
+  21L, "person", "gender",
+  22L, "person", "pid",
+  24L, "remark", "meeting_id",
+  25L, "remark", "person_id",
+  26L, "remark", "index",
+  27L, "remark", "remark",
+  28L, "remark", "lang"
+)
+
+missing_pct <- function(df, column) {
+  sprintf("%.1f %%", mean(is.na(df[[column]])) * 100)
+}
+
+df_miss$Missingness[missing_specs$row] <- pmap_chr(
+  missing_specs,
+  \(row, data, column) missing_pct(data_map[[data]], column)
+)
+
+n_noorg <- df_attend |>
+  filter(is.na(organization)) |>
+  nrow()
+df_miss$Explanation[13] <- glue("{n_noorg} affiliations could not be retrieved.")
+
+n_nofirstname <- df_person |>
+  filter(is.na(firstname)) |>
+  nrow()
+df_miss$Explanation[20] <- glue("{n_nofirstname} first names could not be retrieved.")
+
+n_unattrib <- df_remark |>
+  filter(is.na(person_id)) |>
+  nrow()
+df_miss$Explanation[25] <- glue("{n_unattrib} remarks are unattributed or attributed to a group.")
+
+tt(df_miss, escape = TRUE) |>
+  style_tt(background = "grey90", fontsize = 0.7) |>
+  style_tt(i = 1:29, j = 1, bold = TRUE)
+```
+
+## Data overview
+
+@tbl-overview summarizes key corpus metrics such as the number of documents, meetings, remarks, attendance events, attendees and speakers. @tbl-composition reports gender and organizational composition for attendance events and remarks. @fig-dist captures distributional shape for document length, remarks per meeting, and attendees per meeting. Identity-resolution diagnostics are reported in @tbl-miss.
+
+```{r}
+#| label: tbl-overview
+#| tbl-cap: "Corpus overview"
+
+fmt_int <- function(x) format(as.integer(x), big.mark = ",", scientific = FALSE)
+
+overview_tbl <- tribble(
+  ~Metric, ~Value,
+  "Documents", fmt_int(nrow(df_docs)),
+  "Meetings", fmt_int(n_meetings),
+  "Remarks", fmt_int(nrow(df_remark)),
+  "Attendance events", fmt_int(nrow(df_attend)),
+  "Unique attendees", fmt_int(n_distinct(df_attend$person_id[!is.na(df_attend$person_id) & df_attend$person_id != ""])),
+  "Unique speakers", fmt_int(n_distinct(df_remark$person_id[!is.na(df_remark$person_id) & df_remark$person_id != ""]))
+)
+
+tt(overview_tbl, escape = TRUE) |>
+  style_tt(background = "grey90", fontsize = 0.7) |>
+  style_tt(i = 1:nrow(overview_tbl), j = 1, bold = TRUE)
+```
+
+```{r}
+#| label: tbl-composition
+#| tbl-cap: "Gender and organization composition of attendance events and remarks"
+
+gender_label <- function(x) {
+  case_when(
+    str_to_lower(as.character(x)) %in% c("kvinne", "female") ~ "Women",
+    str_to_lower(as.character(x)) %in% c("mann", "male") ~ "Men",
+    TRUE ~ "Unknown"
+  )
+}
+
+category_label <- function(x) {
+  recode(
+    as.character(x),
+    "Regjering" = "Government",
+    "Storting" = "Parliament",
+    "Embetsverk" = "Civil service",
+    "Næringsliv" = "Private sector",
+    "Akademia" = "Academia",
+    "Rettsvesen" = "Judiciary",
+    "Stortingssekretariat" = "Parliamentary secretariat",
+    .default = "Unknown"
+  )
+}
+
+attend_enriched <- df_attend |>
+  left_join(df_person |> select(person_id, gender), by = "person_id") |>
+  mutate(spoke_flag = str_to_lower(as.character(spoke)) %in% c("1", "true", "yes", "y"))
+
+speaker_enriched <- attend_enriched |>
+  filter(replace_na(spoke_flag, FALSE))
+
+make_dist <- function(df, var, fun_label, population, dimension) {
+  df |>
+    mutate(value = fun_label(.data[[var]])) |>
+    count(value, name = "N") |>
+    mutate(
+      Population = population,
+      Dimension = dimension,
+      Share = N / sum(N)
+    ) |>
+    transmute(Population, Dimension, Category = value, N, Share)
+}
+
+fmt_pct_comp <- function(p) {
+  ifelse(p > 0 & p < 0.1, "<0.1%", sprintf("%.1f%%", p))
+}
+
+composition_long <- bind_rows(
+  make_dist(attend_enriched, "gender", gender_label, "Attendance events", "Gender"),
+  make_dist(speaker_enriched, "gender", gender_label, "Remarks", "Gender"),
+  make_dist(attend_enriched, "category", category_label, "Attendance events", "Organization"),
+  make_dist(speaker_enriched, "category", category_label, "Remarks", "Organization")
+)
+
+composition_tbl <- composition_long |>
+  pivot_wider(
+    id_cols = c(Dimension, Category),
+    names_from = Population,
+    values_from = c(N, Share),
+    names_glue = "{Population} {.value}"
+  ) |>
+  mutate(
+    Dimension = factor(Dimension, levels = c("Gender", "Organization")),
+    Category = case_when(
+      Dimension == "Gender" ~ factor(Category, levels = c("Men", "Women", "Unknown")),
+      TRUE ~ factor(Category, levels = c(
+        "Parliament",
+        "Civil service",
+        "Government",
+        "Parliamentary secretariat",
+        "Private sector",
+        "Academia",
+        "Judiciary",
+        "Unknown"
+      ))
+    )
+  ) |>
+  arrange(Dimension, Category) |>
+  mutate(
+    Group = as.character(Dimension),
+    Group = if_else(duplicated(Group), "", Group),
+    `Attendance events` = fmt_int(`Attendance events N`),
+    `Attendance %` = fmt_pct_comp(100 * `Attendance events Share`),
+    `Remarks` = fmt_int(`Remarks N`),
+    `Remarks %` = fmt_pct_comp(100 * `Remarks Share`)
+  ) |>
+  transmute(
+    Group,
+    Category = as.character(Category),
+    `Attendance events`,
+    `Attendance %`,
+    `Remarks`,
+    `Remarks %`
+  )
+
+composition_tbl_disp <- as.data.frame(composition_tbl, check.names = FALSE)
+names(composition_tbl_disp) <- c("Group", "Category", "N", "%", "N", "%")
+
+tt(composition_tbl_disp, escape = TRUE) |>
+  group_tt(j = list(" " = 1:2, "Attendance events" = 3:4, "Remarks" = 5:6)) |>
+  style_tt(background = "grey90", fontsize = 0.7) |>
+  style_tt(i = 1:nrow(composition_tbl), j = 1, bold = TRUE)
+```
+
+```{r}
+#| label: fig-dist-build
+#| results: hide
+
+dist_theme <- theme_minimal() +
+  theme(
+    axis.text = element_text(face = "bold", size = 6),
+    axis.title = element_text(size = 8),
+    plot.tag = element_text(size = 8)
+  )
+
+doc_dist <- df_docs |>
+  filter(!is.na(wordcount), wordcount > 0) |>
+  ggplot(aes(x = log10(wordcount))) +
+  geom_histogram(
+    aes(y = after_stat(count / sum(count))),
+    bins = 24,
+    fill = "grey70",
+    color = "grey30",
+    linewidth = 0.2
+  ) +
+  scale_x_continuous(
+    breaks = c(3, 4, 5),
+    labels = c("1,000", "10,000", "100,000")
+  ) +
+  scale_y_continuous(labels = label_percent(accuracy = 1)) +
+  labs(x = "Words per document (log scale)", y = "Share", tag = "a)") +
+  dist_theme
+
+remarks_dist <- df_remark |>
+  count(meeting_id, name = "n_remarks") |>
+  ggplot(aes(x = n_remarks)) +
+  geom_histogram(
+    aes(y = after_stat(count / sum(count))),
+    bins = 24,
+    fill = "grey70",
+    color = "grey30",
+    linewidth = 0.2
+  ) +
+  scale_y_continuous(labels = label_percent(accuracy = 1)) +
+  labs(x = "Remarks per meeting", y = "Share", tag = "b)") +
+  dist_theme
+
+attendees_dist <- df_attend |>
+  count(meeting_id, name = "n_attendees") |>
+  ggplot(aes(x = n_attendees)) +
+  geom_histogram(
+    aes(y = after_stat(count / sum(count))),
+    bins = 20,
+    fill = "grey70",
+    color = "grey30",
+    linewidth = 0.2
+  ) +
+  scale_y_continuous(labels = label_percent(accuracy = 1)) +
+  labs(x = "Attendees per meeting", y = "Share", tag = "c)") +
+  dist_theme
+
+fig_dist <- doc_dist + remarks_dist + attendees_dist
+ggsave("figs/fig-dist-overhang.pdf", plot = fig_dist, width = 9.5, height = 2.2, units = "in")
+ggsave("figs/fig-dist-overhang.png", plot = fig_dist, width = 9.5, height = 2.2, units = "in", dpi = 300)
+```
+
+::: {#fig-dist}
+```{=latex}
+\makebox[\linewidth][c]{\includegraphics[width=1.3\linewidth]{figs/fig-dist-overhang.pdf}}
+```
+```{=typst}
+#align(center, image("figs/fig-dist-overhang.png", width: 130%))
+```
+Distribution of document lengths and meeting-level volume metrics. Logged word count per document (a), remarks per meeting (b), and attendees per meeting (c).
+:::
+
+## Technical Validation
+
+We validated the dataset in three ways. First, we conducted iterative manual audits of core data features, including speaker-turn segmentation, OCR/spelling quality, and biographical metadata. In each round, we drew random five-document samples and reviewed all associated records in detail. When we identified an error, we corrected it and, where relevant, added or refined code to detect and fix the same error type elsewhere in the corpus. We repeated this process until a full five-document sample yielded no new issues.
+
+Second, we estimated transcript accuracy computationally using a human-produced ground-truth transcription of `r n_validation_docs` random documents (`r pct_validation_docs_1d` % of documents). The validation sample included both pre-1976 and post-1975 formats and had a median length of `r validation_doc_median_pages` pages (corpus median `r pgcount_median`) and `r validation_doc_median_words_fmt` words (corpus median `r corpus_doc_median_words_fmt`), indicating similar document size to the full corpus. OCR accuracy was measured by comparing each validated remark with its corresponding entry in `remarks.csv` (matched on meeting_id and index) using normalized character-level Levenshtein distance. Across `r n_validation_remarks_fmt` remarks (`r validation_chars_fmt` ground-truth characters, `r pct_validation_chars_1d` % of corpus characters in remark fields, including spaces), we observed `r n_char_edits_fmt` character edits, corresponding to a character error rate (CER) of `r cer_pct_2d`% (95% CI: `r cer_ci_pct`) and a character accuracy of `r char_accuracy_pct_2d`% (95% CI: `r char_accuracy_ci_pct`). Exact string agreement was `r exact_match_pct_2d`% (95% CI: `r exact_match_ci_pct`), as expected lower because even minor character-level deviations are counted as full mismatches under exact matching.
+
+We also tested whether speaker turns were in the correct order using an adjacent-swap diagnostic. For each neighboring pair of remarks, we compared the summed normalized Levenshtein distance under the observed alignment with the summed distance under a hypothetical swap. A pair was flagged if the swapped alignment fit better than the observed one. Across `r n_adjacent_pairs` adjacent pairs, we found 0 swap signatures (ASER = `r aser_pct_2d`%; 95% CI: 0.00-`r aser_ci_upper_pct_2d`%), indicating no detectable local ordering errors in `remarks.csv` relative to the validation transcripts.
+
+Third, we ran an automated integrity validation script with 40 checks across the four CSV files. These checks cover schema conformance, primary-key uniqueness, bidirectional referential integrity, consistency of the spoke flag with the presence of remarks, domain checks for categorical variables, identifier format checks, and plausibility checks (e.g., non-empty remarks, no anomalously long remarks, sequential meeting indices, and no stray whitespace in names). The script returns no errors on the current dataset.
+
+## Usage Notes
+
+The dataset contains four CSV files structured as tables in a database, with only a minimal set of variables in each table. Most practical usage scenarios will therefore involve some table merging. For example, to build a full attendance events dataset with dates and names, a user will need to take `attendees.csv` and merge in the "date" variable from `documents.csv` and "lastname" and "firstname" variables from `persons.csv`, joining on "meeting_id" and "person_id" respectively.
+
+## Data Availability
+
+The EFAC dataset is hosted at Zenodo.[@efac-zenodo-2026] The archived release includes `remarks.csv`, `attendees.csv`, `persons.csv`, `documents.csv`, `README.md`, and `CODEBOOK.md`.
+
+## Code Availability
+
+The code used to collect, process, validate, and summarize the dataset, as well as the code used to generate the figures and tables in this article is available at <https://github.com/Hegghammer/efac>. Because dataset construction also involved substantial manual processing (including manual review and correction steps), the data-generation scripts are provided for computational provenance and partial reproducibility rather than full one-click regeneration of the final dataset. The authoritative released dataset is the Zenodo archive.[@efac-zenodo-2026] Across the data-generation and article-replication workflow we used R (version 4.5.2) with the packages `base64enc`, `cli`, `dplyr`, `ellmer`, `fs`, `glue`, `haven`, `httr2`, `hunspell`, `jsonlite`, `lubridate`, `magick`, `patchwork`, `qpdf`, `readr`, `rmarkdown`, `rvest`, `scales`, `stringdist`, `stringi`, `stringr`, `textreuse`, `tibble`, `tidyverse`, `tinytable`, `tokenizers`, and `xml2`.[@R-base64enc; @R-cli; @R-dplyr; @R-ellmer; @R-fs; @R-glue; @R-haven; @R-httr2; @R-hunspell; @jsonlite2014; @lubridate2011; @R-magick; @R-patchwork; @R-qpdf; @R-readr; @R-rmarkdown; @R-rvest; @R-scales; @stringdist2014; @stringi2022; @R-stringr; @R-textreuse; @R-tibble; @tidyverse2019; @R-tinytable; @tokenizers2018; @R-xml2]
+
+`#pagebreak()`{=typst}
+
+## References
+
+::: {#refs}
+:::
+
+## Acknowledgments
+
+We thank Jeffrey Love and Arne Hegghammer for valuable research assistance, Mark Stout for helpful comments, and Egil Borlaug and Odd Harald Kvammen at the Parliamentary Archive for kindly answering our many queries. 
+
+## Author contributions
+
+Both authors conceived the overall project. T.H. gathered, cleaned, and validated the data. M.B.H did most of the background research and literature review. T.H. drafted most of the manuscript.
+
+## Competing interests
+
+The authors declare no competing interests.
+
+## Funding
+
+M.B.H. acknowledges funding from the UK Ministry of Defence (grant named "Deterrence Challenges in the High North").

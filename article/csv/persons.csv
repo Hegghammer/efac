@@ -1,0 +1,1021 @@
+person_id,lastname,firstname,gender,pid
+90001,Rygh,Aage,mann,NA
+90002,Owe,Aage Willand,mann,NA
+90003,Bjerkholt,Aase,kvinne,969
+90004,Lionæs,Aase Wind,kvinne,1003
+90005,Øen,Adolf Bjarne,mann,NA
+90006,Stabell,Adolf Bredo,mann,NA
+90007,Indrebø,Adolf Oliverson,mann,NA
+90008,Nordengen,Albert Emil,mann,1228
+90009,Ihlen,Alf,mann,NA
+90010,Bjørnø,Alf Martin,mann,1383
+90011,Midtbust,Alf,mann,NA
+90012,Madsen,Alfred Martin,mann,1466
+90013,Henningsen,Alfred Meyer,mann,1469
+90014,Fostervoll,Alv Jakob,mann,1528
+90015,Kjøs,Alv,mann,1529
+90016,Sjaastad,Anders Christian,mann,1652
+90017,Bøyum,Anders Johanneson,mann,1686
+90018,Aune,Anders John,mann,1689
+90019,Talleraas,Anders,mann,1766
+90020,Rygg,Andreas,mann,NA
+90021,Wormdahl,Andreas,mann,1929
+90022,Cappelen,Andreas Zeier,mann,1931
+90023,Øen,Anfin,mann,1980
+90024,Aabakken,Ola,mann,NA
+90025,Lahnstein,Anne Enger,kvinne,2430
+90026,Vik,Anne Petrea,kvinne,NA
+90027,Høegh,Annelise,kvinne,2927
+90028,Ryen,Anton,mann,3052
+90029,Skulberg,Anton,mann,3055
+90030,Spilde,Arne Alsåker,mann,3203
+90031,Arnesen,Arne,mann,NA
+90032,Christiansen,Arne,mann,NA
+90033,Kielland,Arne,mann,3382
+90034,Magnussen,Arne,mann,3437
+90035,Skaug,Arne,mann,NA
+90036,Skauge,Arne,mann,3530
+90037,Sunde,Arne Toralf,mann,NA
+90038,Strøm,Arne Torolf,mann,3573
+90039,Øien,Arne,mann,NA
+90040,Norwich,Arnljot,mann,3700
+90041,Weiberg-Aurdal,Arnold,mann,3747
+90042,Hagen,Arnt Gudleik,mann,3766
+90043,Mørland,Arnt Jacobsen,mann,3778
+90044,Sundt,Arthur,mann,3851
+90045,Johanson,Arvid Helmer,mann,3929
+90046,Matheson,Arvid,mann,NA
+90047,Holm,Asbjørn Antoni,mann,4014
+90048,Haugstvedt,Asbjørn,mann,4047
+90049,Lillås,Asbjørn,mann,4065
+90050,Sjøthun,Asbjørn,mann,4090
+90051,Magnus,Audun,mann,NA
+90052,Røiseland,Bent,mann,5027
+90053,Furre,Berge Ragnar,mann,5127
+90054,Ås,Berit,kvinne,5313
+90055,Ingvaldsen,Bernt,mann,5365
+90056,Braadland,Birger,mann,5446
+90057,Kildal,Birger,mann,5462
+90058,Aall,Nils Frederik,mann,NA
+90059,Flem,Bjarne,mann,5597
+90060,Hurlen,Bjarne,mann,NA
+90061,Mørk-Eidem,Bjarne,mann,5653
+90062,Sæverud,Bjarne Peder Olai,mann,5665
+90063,Robberstad,Bjarne,mann,NA
+90064,Gjerde,Bjartmar,mann,5721
+90065,Barth,Bjørn,mann,NA
+90066,Ytterhorn,Bjørn Erling,mann,5971
+90067,Kristvik,Bjørn,mann,NA
+90068,Larsen,Bjørn,mann,NA
+90069,Aalmo,John,mann,19524
+90070,Bruland,Bjørn Rochmann,mann,NA
+90071,Godal,Bjørn Tore,mann,6196
+90072,Røyseland,Borghild,kvinne,6379
+90073,Brun,Bue,mann,NA
+90074,Torstensen,Carl Adolf,mann,NA
+90075,Wright,Carl August Petersen,mann,6900
+90076,Bjørge,Carl,mann,NA
+90077,Hagen,Carl Ivar,mann,6921
+90078,Hambro,Carl Joachim,mann,6924
+90079,Ruge,Carl,mann,NA
+90080,Stabel,Carl,mann,NA
+90081,Michelet,Christian Fredrik,mann,NA
+90082,Monsen,Christian Fredrik,mann,7153
+90083,Hornsrud,Christopher Andersen,mann,7273
+90084,Bryn,Dag Ramsøy,mann,NA
+90085,Weberg,Dag Christopher,mann,7374
+90086,Aarrestad,Unn,kvinne,40468
+90087,Stenseth,Dagfinn,mann,NA
+90088,Vårvik,Dagfinn,mann,7506
+90089,Danielsen,Edvard Christian,mann,NA
+90090,Grimstad,Edvard,mann,8311
+90091,Hambro,Edvard Isak,mann,8316
+90092,Aarvik,Egil,mann,8362
+90093,Amlie,Egil,mann,NA
+90094,Hernæs,Egil,mann,8401
+90095,Meland,Eilef Andreas,mann,8509
+90096,Ansteensen,Einar,mann,NA
+90097,Ofstad,Einar Fredrik,mann,NA
+90098,Frogner,Einar,mann,8601
+90099,Førde,Einar,mann,8603
+90100,Gerhardsen,Einar Henry,mann,8625
+90101,Hareide,Einar,mann,8618
+90102,Moxnes,Einar Hole,mann,8628
+90103,Hovdhaugen,Einar,mann,8634
+90104,Magnussen,Einar,mann,NA
+90105,Osland,Einar,mann,8698
+90106,Wøhni,Einar,mann,8742
+90107,Bolle,Eivind,mann,8851
+90108,Berg,Eivinn,mann,NA
+90109,Nordbø,Eldrid,kvinne,NA
+90110,Selmer,Elisabeth Schweigaard,kvinne,NA
+90111,Vindsetmo,Emil Kristian,mann,NA
+90112,Løvlien,Emil,mann,9650
+90113,Aars,Knut,mann,NA
+90114,Colban,Erik Andreas,mann,NA
+90115,Ribu,Erik Andreas,mann,NA
+90116,Braadland,Erik,mann,9755
+90117,Brofoss,Erik,mann,NA
+90118,Himle,Erik,mann,NA
+90119,Nord,Erik,mann,NA
+90120,Solheim,Erik,mann,9876
+90121,Steenberg,Erland,mann,9915
+90122,Engan,Erling,mann,9989
+90123,Fredriksfryd,Erling,mann,9997
+90124,Norvik,Erling,mann,10019
+90125,Petersen,Erling Helmer,mann,10009
+90126,Wikborg,Erling,mann,10084
+90127,Pettersen,Eugen Amandus,mann,10247
+90128,Gustavsen,Finn,mann,10633
+90129,Hiorthøy,Finn,mann,NA
+90130,Kristensen,Finn,mann,10648
+90131,Lied,Finn,mann,NA
+90132,Moe,Finn,mann,10706
+90133,Seyersted,Finn,mann,NA
+90134,Øen,Finn,mann,10697
+90135,Castberg,Frede,mann,NA
+90136,Aas,NA,mann,NA
+90137,Gundersen,Fridtjof Frank,mann,10919
+90138,Bettum,Ole Frithjof,mann,31018
+90139,Jacobsen,Frithjof Halfdan,mann,NA
+90140,Moseid,Gabriel Endresen,mann,11291
+90141,Apenes,Georg,mann,11486
+90142,Hagerup-Larssen,Georg,mann,NA
+90143,Jacobsen,Georg Johan,mann,11496
+90144,Faremo,Grete,kvinne,NA
+90145,Værnø,Grethe Kathrine,kvinne,11891
+90146,Brundtland,Gro Harlem,kvinne,11950
+90147,Harlem,Gudmund,mann,NA
+90148,Hernes,Gudmund,mann,NA
+90149,Restad,Gudmund,mann,12061
+90150,Øyangen,Gunhild Elise,kvinne,12218
+90151,Larsen,Gunnar Alf,mann,12318
+90152,Berge,Gunnar,mann,12340
+90153,Hellesen,Gunnar Fredrik,mann,12378
+90154,Garbo,Gunnar,mann,12384
+90155,Jahn,Gunnar,mann,NA
+90156,Rogstad,Gunnar,mann,NA
+90157,Skaug,Gunnar,mann,12523
+90158,Sjaastad,Gustav Adolf,mann,12753
+90159,Natvig-Pedersen,Gustav,mann,12771
+90160,Hansen,Guttorm,mann,12792
+90161,Hegtun,Halfdan,mann,13655
+90162,Bakke,Hallvard,mann,13697
+90163,Eika,Hallvard,mann,13701
+90164,Lange,Halvard,mann,13733
+90165,Koht,Halvdan,mann,NA
+90166,Kvanmo,Hanna,kvinne,13813
+90167,Borgen,Hans,mann,13968
+90168,Engen,Hans,mann,NA
+90169,Melsom,Hans Gunnar,mann,NA
+90170,Rossbach,Hans Hammond,mann,14041
+90171,Røsjorde,Hans Johan,mann,14079
+90172,Seip,Hans Kristian,mann,14125
+90173,Stavrand,Hans Nikolai,mann,14171
+90174,Offerdal,Hans,mann,14177
+90175,Tungesvik,Hans Olav,mann,14189
+90176,Svendsgård,Hans,mann,14265
+90177,Gram,Harald,mann,14386
+90178,Torp,Vincent Harald Houge,mann,40922
+90179,Løbak,Harald Johan,mann,14417
+90180,Norvik,Harald,mann,NA
+90181,Synnes,Harald,mann,14514
+90182,Lied,Harald Ulfert,mann,14530
+90183,Warholm,Harald,mann,14539
+90184,Klippenvåg,Harry Johan Olai,mann,14600
+90185,Bøsterud,Helen Marie,kvinne,14812
+90186,Jakobsen,Helge,mann,14990
+90187,Seip,Helge Lunde,mann,15003
+90188,Sivertsen,Helge,mann,NA
+90189,Vindenes,Helge,mann,NA
+90190,Svensen,Sven Søren Henrik,mann,37244
+90191,Zeiner-Gundersen,Herman Fredrik,mann,NA
+90192,Smitt-Ingebretsen,Herman,mann,15310
+90193,Skånland,Hermod,mann,NA
+90194,Eian,Hermund,mann,15326
+90195,Storeide,Hjalmar Olai,mann,15514
+90196,Kyllingmark,Håkon,mann,15653
+90197,Staldvik,Inge Jostein,mann,16124
+90198,Steen,Inger Dag,kvinne,16347
+90199,Valle,Inger Louise,kvinne,16479
+90200,Willoch,Ingrid Isaachsen,kvinne,16724
+90201,Godal,Ingvald,mann,16882
+90202,Ulveseth,Ingvald Johan,mann,16888
+90203,Jaklin,Ingvald Johannes,mann,16889
+90204,Bakken,Ingvar Henry,mann,16920
+90205,Vaksdal,Ivar Johannesen,mann,17184
+90206,Eikrem,Ivar Kornelius,mann,17192
+90207,Hognestad,Ivar Kristiansen,mann,17196
+90208,Kirkeby-Garstad,Ivar Larsen,mann,17202
+90209,Lykke,Ivar,mann,17285
+90210,Halvorsen,Jahn,mann,NA
+90211,Aano,Jakob,mann,18176
+90212,Friis,Jakob Johan Sigfrid,mann,18204
+90213,Pettersen,Jakob Martin,mann,18212
+90214,Lothe,Jakob Mathias Antonson,mann,18214
+90215,Olsen,Jan Henry Tungeland,mann,NA
+90216,Balstad,Jan Kristian,mann,NA
+90217,Syse,Jan Peder,mann,18556
+90218,Petersen,Jan,mann,18558
+90219,Boyesen,Jens Mogens,mann,NA
+90220,Hauge,Jens Christian,mann,NA
+90221,Evensen,Jens Ingebret,mann,NA
+90222,Hundseid,Jens Valentinsen,mann,18971
+90223,Haugland,Jens,mann,18966
+90224,Lyche,Jens Lange,mann,NA
+90225,Marcussen,Jens,mann,19048
+90226,Steffensen,Jens Olai,mann,19002
+90227,Almestad,Knut,mann,NA
+90228,Bull,Jens Steenberg,mann,NA
+90229,Benkow,Jo,mann,19075
+90230,Hjort,Johan,mann,17374
+90231,Buttedahl,Johan,mann,19178
+90232,Mellbye,Johan Egeberg,mann,19194
+90233,Ræder,Johan Georg Alexius,mann,NA
+90234,Holmboe,Johan Henrik Rye,mann,19228
+90235,Jakobsen,Johan Jakob,mann,19241
+90236,Holst,Johan Jørgen,mann,NA
+90237,Kleppe,Johan,mann,19252
+90238,Mowinckel,Johan Ludvig,mann,19266
+90239,Warmedal,Johan Møller,mann,19291
+90240,Nygaardsvold,Johan,mann,19300
+90241,Vikan,Johan Reinert Arnesen,mann,19146
+90242,Johansen,Johan Strand,mann,19337
+90243,Wiik,Johan,mann,19357
+90244,Østby,Johan,mann,19359
+90245,Holm,Johannes Olai,mann,19482
+90246,Olsen,Johannes Olai,mann,19483
+90247,Austrheim,John,mann,19549
+90248,Lyng,John Daniel Fürstenberg,mann,19568
+90249,Ringen,John,mann,NA
+90250,Aas,Jon Reinholdt,mann,19979
+90251,Andrå,Jon,mann,19823
+90252,Leirfall,Jon,mann,19936
+90253,Norbom,Jon Ola Hauger,mann,NA
+90254,Skeie,Jon,mann,NA
+90255,Smith,NA,mann,NA
+90256,Sundby,Jon,mann,20001
+90258,Five,Kaci Kullmann,kvinne,21120
+90259,Knudsen,Kai,mann,NA
+90260,Hafstad,Karin,kvinne,21567
+90261,Brommeland,Karl Johan,mann,21716
+90262,Skjerdal,Karl,mann,NA
+90263,Klevstad,Karl Sverre,mann,21795
+90264,Grøndahl,Kirsti Kolle,kvinne,22183
+90265,Bondevik,Kjell,mann,22292
+90266,Eliassen,Kjell,mann,NA
+90267,Furnes,Kjell,mann,22336
+90268,Bondevik,Kjell Magne,mann,22433
+90269,Fredheim,Kjell Magne,mann,22435
+90270,Holler,Kjell Torbjørn,mann,NA
+90271,Lunde,Kjellbjørg,kvinne,22602
+90272,Sunnanå,Klaus,mann,NA
+90273,Røed,Knut B.,mann,NA
+90274,Frydenlund,Knut,mann,22907
+90275,Wold,Knut Getz,mann,NA
+90276,Hedemann,Knut,mann,NA
+90277,Hoem,Knut,mann,NA
+90278,Isachsen,Knut,mann,22966
+90279,Knudsen,Konrad Gustav,mann,23205
+90280,Nordahl,Konrad Mathias,mann,23208
+90281,Stoltenberg,Kr.,mann,NA
+90282,Andersen,Andreas,mann,NA
+90283,Langlo,Kristian,mann,23317
+90284,Mosbakk,Kurt,mann,23603
+90285,Gjønnes,Kåre,mann,23687
+90286,Kristiansen,Kåre,mann,23738
+90287,Rønning,Kåre,mann,23784
+90288,Stokkeland,Kåre,mann,23796
+90289,Willoch,Kåre,mann,23823
+90290,Vatnaland,Lars Elisæus,mann,24322
+90291,Korvald,Lars,mann,24416
+90292,Leiro,Lars,mann,24427
+90293,Meling,Lars Olai,mann,24465
+90294,Ramndal,Lars,mann,24496
+90295,Andersen,Andreas Martinius,mann,NA
+90296,Platou,Lars Tokstad Sem,mann,24539
+90297,Granli,Leif,mann,24744
+90298,Mevik,Leif Hans,mann,NA
+90299,Aasen,Liv,kvinne,25352
+90300,Andersen,Magnus,mann,26239
+90301,Nilssen,Magnus,mann,26271
+90302,Hansen-Krone,Margit,kvinne,26454
+90303,Munkebye,Margith Johanne,kvinne,26496
+90304,Løvvig,Marit,kvinne,27024
+90305,Rotnes,Marit,kvinne,27051
+90306,Handberg,Martin Halvorsen,mann,27294
+90307,Tranmæl,Martin Olsen,mann,27333
+90308,Skaar,Nils Nilsson,mann,NA
+90309,Lid,Mons,mann,27955
+90310,Valen,Neri,mann,28374
+90311,Lavik,Nils Andresson,mann,28440
+90312,Hoel,Nils Astrup,mann,NA
+90313,Gulnes,Nils B.,mann,NA
+90314,Hønsvald,Nils,mann,28527
+90315,Lysø,Nils Kristian,mann,28567
+90316,Handal,Nils Kristoffer,mann,NA
+90317,Langhelle,Nils,mann,28574
+90318,Golten,Nils Olavsen,mann,28606
+90319,Trædal,Nils,mann,28668
+90320,Hatlem,Ole Birger,mann,NA
+90321,Bull,Odd,mann,NA
+90322,Gøthe,Odd Christian,mann,NA
+90323,Lien,Odd,mann,29942
+90324,Vigestad,Odd,mann,30055
+90325,Hoel,Oddmund,mann,30170
+90326,Myklebust,Oddmund,mann,NA
+90327,Pettersen,Oddrunn,kvinne,30212
+90328,Berrefjord,Oddvar,mann,30222
+90329,Hansen,Odin,mann,30305
+90330,Nordli,Odvar,mann,30317
+90331,Gjengedal,Ola Johan,mann,30367
+90332,Bræk,Ola Skjåk,mann,30418
+90333,Watnebryn,Olaf Fredrik,mann,30470
+90334,Øen,Olaf,mann,30525
+90335,Benum,Olav,mann,30606
+90336,Bucher-Johannessen,Olav,mann,NA
+90337,Gjærevoll,Olav,mann,30661
+90338,Christiansen,Olav Haakon,mann,30675
+90339,Meisdalshagen,Olav,mann,30779
+90340,Vegheim,Olav Thorbjørnsen,mann,30862
+90341,Andersen,Dag Terje,mann,7450
+90342,Bergesen,Ole,mann,30962
+90343,Ueland,Ole Gabriel,mann,31028
+90344,Andersen,Johan,mann,19155
+90345,Myrvoll,Ole,mann,31208
+90346,Sandberg,Ole Rømer Aagaard,mann,31252
+90347,Skjelbred-Knudsen,Oluf Andreas,mann,30447
+90348,Gundersen,Oscar Christian,mann,NA
+90349,Hillgaar,Oscar Douglas,mann,31406
+90350,Torp,Oscar Fredrik,mann,31408
+90351,Brox,Ottar,mann,31477
+90352,Landfald,Ottar,mann,31495
+90353,Dahl,Otto,mann,31524
+90354,Tidemand,Otto Grieg,mann,NA
+90355,Lyng,Otto,mann,31548
+90356,Bog,Paal,mann,NA
+90357,Vogt,Paul Benjamin,mann,NA
+90358,Chaffey,Paul,mann,31990
+90359,Ingebretsen,Paul,mann,32014
+90360,Thyness,Paul,mann,32053
+90361,Sunde,Paul Tjøstolsen,mann,32054
+90362,Holt,Peder,mann,NA
+90363,Utsi,Per Alfred,mann,32183
+90364,Borten,Per,mann,32254
+90365,Ditlev-Simonsen,Per,mann,32273
+90366,Hysing-Dahl,Per,mann,32362
+90367,Kleppe,Per Andreas Hildhe,mann,32200
+90368,Mellesmo,Per,mann,32475
+90369,Prebensen,Per Preben,mann,NA
+90370,Glad,Per Størk,mann,NA
+90371,Tresselt,Per Egil,mann,NA
+90372,Foss,Per-Kristian,mann,32643
+90373,Angelsen,Peter,mann,32682
+90374,Thorvik,Peter Olai,mann,32714
+90375,Reinsnes,Peter Ovald,mann,32685
+90376,Bjerve,Petter Jakob,mann,NA
+90377,Thomassen,Petter,mann,32818
+90378,Skjervengen,Pål Atle,mann,32849
+90379,Christiansen,Ragnar Karl Viktor,mann,33201
+90380,Seweriin,Rakel,kvinne,33436
+90381,Skylstad,Rasmus,mann,NA
+90382,Bruu,Reidar,mann,33703
+90383,Carlsen,Reidar,mann,33704
+90384,Johansen,Reidar,mann,33744
+90385,Skau,Reidar,mann,NA
+90386,Larsen,Reidar Thoralf,mann,33796
+90387,Henriksen,Rein,mann,NA
+90388,Steen,Reiulf,mann,33913
+90389,Andersen,Rolf,mann,34287
+90390,Hansen,Rolf Arthur,mann,NA
+90391,Busch,Rolf,mann,NA
+90392,Fjeldvær,Rolf,mann,34330
+90393,Bjørn,Rolf Ketil,mann,34373
+90394,Stranger,Rolf,mann,34427
+90395,Østbye,Rolf,mann,NA
+90396,Andresen,Rudolf Kristian,mann,NA
+90397,Roald,Severin,mann,NA
+90398,Johnsen,Sigbjørn,mann,35421
+90399,Asserson,Sigurd Kristian,mann,NA
+90400,Hamran,Sigurd Lund,mann,35755
+90401,Toppe,Steffen Ingebriktsen,mann,36418
+90402,Ørnhøi,Stein Henry,mann,36469
+90403,Kvalø,Steiner Arvid,mann,36660
+90404,Møller,Sunniva Hakestad,kvinne,36888
+90405,Alsaker,Svein,mann,36930
+90406,Munkejord,Svein Magnus,mann,NA
+90407,Hauge,Sven,mann,NA
+90408,Knudsen,Sven,mann,NA
+90409,Nielsen,Sven,mann,37234
+90410,Andersen,Jon Dag,mann,NA
+90411,Bruun,Svend Foyn,mann,37253
+90412,Stray,Svenn Thorkild,mann,37273
+90413,Nybø,Sverre Bernhard,mann,37288
+90414,Gjellum,Sverre,mann,NA
+90415,Hamre,Sverre,mann,NA
+90416,Helland,Sverre J.,mann,37331
+90417,Støstad,Sverre Kornelius Eilertsen,mann,37344
+90418,Mo,Sverre Larsson,mann,37350
+90419,Rostoft,Sverre Walter,mann,37410
+90420,Sommerfelt,Søren Christian,mann,NA
+90421,Skranefjell,T.,mann,NA
+90422,Nyberget,Terje,mann,38097
+90423,Wold,Terje,mann,38174
+90424,Koritzinsky,Theo,mann,38207
+90425,Knudsen,Thor,mann,38350
+90426,Listau,Thor,mann,38357
+90427,Berntsen,Thorbjørn,mann,38412
+90428,Treholt,Thorstein,mann,38514
+90429,Stoltenberg,Thorvald,mann,NA
+90430,Greve,Tim,mann,NA
+90431,Thoresen,Tom,mann,38685
+90432,Vraalsen,Tom Eric,mann,NA
+90433,Henriksen,Tor,mann,38961
+90434,Wara,Tor Mikkel,mann,39016
+90435,Oftedal,Tor,mann,39028
+90436,Houg,Tora Aasland,kvinne,39103
+90437,Westermoen,Toralf,mann,39134
+90438,Anderssen-Rysst,Torgeir,mann,39455
+90439,Tande,Torkell Arnold,mann,39642
+90440,Selvik,Torstein,mann,39793
+90441,Tynning,Torstein,mann,39804
+90442,Veierød,Tove,kvinne,NA
+90443,Hegna,Trond,mann,40051
+90444,Bratteli,Trygve Martin,mann,40244
+90445,Bull,Trygve,mann,40201
+90446,Lie,Trygve Halvdan,mann,40217
+90447,Olsen,Trygve Jens Asbjørn,mann,NA
+90448,Sverdrup,Trygve,mann,40278
+90449,Utheim,Trygve,mann,40288
+90450,Gabrielsen,Valter,mann,40600
+90451,Evang,Vilhelm,mann,NA
+90452,Andersen,Ragnvald Mikal,mann,33417
+90453,Morgenstierne,Wilhelm Thorleif von Munthe af,mann,NA
+90454,Hansteen,Wilhelm von Tangen,mann,NA
+90455,Wold,Willy Arne,mann,41200
+90456,Gauslaa,Noan Christian,mann,28777
+90457,Ræstad,Arnold Christopher,mann,NA
+90458,Davik,NA,mann,NA
+90459,Esmarch,August Wilhelm Stjernstedt,mann,NA
+90460,Eggen,Nicolai Johnsen,mann,28170
+90461,Daasnes,NA,mann,NA
+90462,Holager,NA,mann,NA
+90463,Solli,NA,mann,NA
+90464,Stokke,Tor,mann,NA
+90465,Arbo Høeg,NA,mann,NA
+90466,Salvesen,NA,mann,NA
+90467,Lie,NA,mann,NA
+90468,Rasmussen,NA,mann,NA
+90469,Underland,Ulf,mann,NA
+90470,Holmboe,Arnold,mann,3721
+90471,Indrehus,Kristofer Pedersen,mann,23542
+90472,Langslet,Lars Roar,mann,24504
+90473,Steen,Nils Andreas,mann,28439
+90474,Ulvin,Jens,mann,NA
+90475,Andresen,A. P.,mann,NA
+90476,Andresen,NA,mann,NA
+90477,Andvord,Rolf,mann,NA
+90478,Anker,Peter Martin,mann,NA
+90479,Araldsen,NA,mann,NA
+90480,Arnesen,NA,mann,NA
+90481,Arnstad,Eli,kvinne,8976
+90482,Arntzen,Arthur,mann,3827
+90483,Arvesen,Jan,mann,NA
+90484,Aubert,Ludvig Cæsar Martin,mann,NA
+90485,Augdahl,NA,mann,NA
+90486,Aursand,NA,mann,NA
+90487,Austad,Tore,mann,39275
+90488,Backer,Finn,mann,NA
+90489,Backer,Zacharias,mann,NA
+90490,Bakke,Johnny,mann,19761
+90491,Bakken,Alf Morten,mann,1386
+90492,Bakkevig,Agnes,kvinne,1106
+90493,Bakkevik,Trond,mann,NA
+90494,Bartnes,Inge Einarsen,mann,16113
+90495,Barton,Øystein,mann,NA
+90496,Bech,Jon,mann,NA
+90497,Beitland,Gudmund Olav,mann,NA
+90498,Bendiksen,Rolf,mann,34293
+90499,Berg,Arve,mann,3861
+90500,Berg,Hallvor,mann,NA
+90501,Berg,Ole,mann,NA
+90502,Berg,NA,mann,NA
+90503,Berg-Sæther,Bjarne,mann,5576
+90504,Berge,Syver,mann,37500
+90505,Bergflødt,NA,mann,NA
+90506,Bergsvik,Kornelius Olai Person,mann,NA
+90507,Berrefjord,Ole,mann,NA
+90508,Berstad,Olav,mann,NA
+90509,Bingen,Haakon,mann,NA
+90510,Bjartveit,Eleonore,kvinne,8961
+90511,Bjellaanes,Halvor,mann,13754
+90512,Bjørge-Hansen,K.,mann,NA
+90513,Blaaflat,NA,mann,NA
+90514,Blakset,Leiv,mann,24895
+90515,Blankenborg,Haakon,mann,13569
+90516,Blattmann,Aud,kvinne,4513
+90517,Boehlke,Hans Christian Sommerfeldt,mann,NA
+90518,Bohlin,Kjell,mann,22291
+90519,Borge,Aagot,kvinne,946
+90520,Botnen,Ingeborg,kvinne,16221
+90521,Botnen,Ludvig Olai,mann,25640
+90522,Boye,Thore,mann,NA
+90525,Braadland,NA,mann,NA
+90526,Brattestå,Hans,mann,NA
+90527,Breien,NA,mann,NA
+90528,Breilid,Torkjell,mann,39649
+90529,Breivik,Jahn Åge,mann,NA
+90530,Breivik,Jens,mann,NA
+90531,Breivoll,Håkon Martin,mann,15664
+90532,Brinch,Christian Nicolay Keyser,mann,NA
+90533,Brunvand,Olav Arnold,mann,NA
+90534,Bryhni,Finn Wilhelm,mann,NA
+90535,Bugge,NA,mann,NA
+90536,Bull,Einar M.,mann,NA
+90537,Bull-Hansen,Fredrik,mann,NA
+90538,Buraas,NA,kvinne,NA
+90539,By,B.,mann,NA
+90540,Bye,Odd,mann,NA
+90541,Bækken,Øyvind,mann,NA
+90542,Bøgh-Tobiassen,NA,mann,NA
+90543,Bølset,Nils,mann,NA
+90544,Børde,Ketil,mann,NA
+90545,Christiansen,Kjell,mann,NA
+90546,Christiansen,Torbjørn,mann,NA
+90547,Christiansen,NA,mann,NA
+90548,Christie,Johan Koren,mann,NA
+90549,Colding,Kjell,mann,NA
+90550,Dahl,Johan H.,mann,NA
+90551,Dahlø,Paul Martin,mann,32033
+90552,Dalheim,Erik,mann,9763
+90553,Dalstø,Johannes,mann,NA
+90554,Danielsen,Åge,mann,NA
+90555,Djønne,Paal,mann,NA
+90556,Donbolt,Ove,mann,NA
+90557,Dons,Erik,mann,NA
+90558,Dramdal,Torun,kvinne,39808
+90559,Due,Reidar,mann,33706
+90560,Dæhlin,Knud Odmund,mann,NA
+90561,Edwardsen,Leif,mann,NA
+90562,Edøy,Oskar,mann,31426
+90563,Efjestad,Svein,mann,NA
+90564,Egeland,Jan,mann,NA
+90565,Eia,Bjarne,mann,5591
+90566,Eide,Kai,mann,NA
+90567,Eide,Mary,kvinne,27390
+90568,Eidem,Bjørn,mann,NA
+90569,Eidsmo,Arne,mann,NA
+90570,Eikeland,Asbjørn,mann,NA
+90571,Ekeland,NA,mann,NA
+90572,Eldring,Leif,mann,NA
+90573,Eliassen,NA,mann,NA
+90574,Ellefsen,Harald,mann,14370
+90575,Elvheim,Jan,mann,18332
+90576,Endresen,Sigurd,mann,NA
+90577,Engelstad,Gunvald,mann,12622
+90578,Engh,Ole M.,mann,NA
+90579,Erdal,Anders,mann,NA
+90580,Erichsen,Eivind,mann,NA
+90581,Erichsen,Hertzberg,mann,NA
+90582,Eriksen,Bjørn Holter,mann,NA
+90583,Eriksen,Tore,mann,NA
+90584,Erlandsen,Hans Christian,mann,NA
+90585,Eskeland,NA,mann,NA
+90586,Espelid,Mons,mann,27951
+90587,Evensen,Lars Samuel Myhrer,mann,24511
+90588,Evensen,NA,mann,NA
+90589,Fagerheim,Oddleif,mann,30153
+90590,Fagernes,Astrid,kvinne,4331
+90591,Farstad,Ove,mann,NA
+90592,Fatland,Gunnar,mann,12373
+90593,Finne,Mons,mann,NA
+90594,Finstad,Eva Rolstad,kvinne,10372
+90595,Fjeld,Leif,mann,NA
+90596,Fjærvoll,Dag Jostein,mann,7411
+90597,Flaten,Bertel,mann,5401
+90598,Flatla,Jan,mann,NA
+90599,Flatlandsmo,Borgny,kvinne,NA
+90600,Fleischer,Carl August,mann,NA
+90601,Flå,Jens P.,mann,19008
+90602,Foss,NA,mann,NA
+90603,Fosseidbråten,Odd,mann,NA
+90604,Fostervoll,Finn Kristen,mann,NA
+90605,Frantzen,Ranveig Johanna,kvinne,33600
+90606,Fredriksen,Aslaug,kvinne,4174
+90607,Frihagen,Anders Rasmus,mann,NA
+90608,Frisvold,Sigurd,mann,NA
+90609,Frøiland,Ranveig,kvinne,33599
+90610,Frøysnes,Torbjørn,mann,39177
+90611,Gabrielsen,Hans Julius,mann,NA
+90612,Gabrielsen,Yngve,mann,NA
+90613,Gisvoll,Kåre,mann,NA
+90614,Gjedrem,Svein,mann,NA
+90615,Gjelsvik,Odd,mann,NA
+90616,Gjems-Onstad,Erik,mann,9777
+90617,Gjerde,Gunnar,mann,NA
+90618,Gjertsen,Astrid,kvinne,4337
+90619,Gjesteby,Kari,kvinne,NA
+90620,Gjesteby,Omar Anton Pedersen,mann,31394
+90621,Gjørv,Inger Lise,kvinne,16462
+90622,Gjøtterud,Reidar,mann,33719
+90623,Glenne,Eirik,mann,NA
+90624,Glomstein,Ivar,mann,NA
+90625,Graver,Petter,mann,NA
+90626,Gravås,Ottar,mann,31485
+90627,Grevstad,Jan,mann,NA
+90628,Grue,Per Harald,mann,NA
+90629,Grydeland,Bjørn,mann,NA
+90630,Grytøyr,Gudmund,mann,12046
+90631,Grønli,Bjørn,mann,NA
+90632,Grøtter,Sverre,mann,NA
+90633,Gudmundseth,Roger,mann,34228
+90634,Gulbrandsen,Reidun,kvinne,NA
+90635,Gulbrandsen,Thor-Eirik,mann,38396
+90636,Gulowsen,Per A. J.,mann,NA
+90637,Gundersen,Gunnar H.,mann,NA
+90638,Gundersen,Ragnvald Marensius,mann,33416
+90639,Gundersen,NA,mann,NA
+90640,Gunneng,Arne Christian,mann,NA
+90641,Gurde,M.,mann,NA
+90642,Gystad,Thor,mann,38336
+90643,Haarstad,Ragnhild Queseth,kvinne,33349
+90644,Haavardstad,Torvald,mann,39845
+90645,Hagelia,Magnhild,kvinne,26200
+90646,Hagen,Torbjørn Wilhelm,mann,39230
+90648,Halsne,Kornelius,mann,NA
+90649,Hancke,Rolf Fredrik,mann,NA
+90650,Hansen,Harry Anfinn,mann,14587
+90651,Hansen,Otto,mann,31534
+90652,Hansen,Rolf Willy,mann,NA
+90653,Hanssen,Kjell,mann,22365
+90654,Haram,Petter B.,mann,NA
+90655,Harkestad,Britt,kvinne,6504
+90656,Hauan,Åshild,kvinne,41499
+90657,Hauge,Anders A.,mann,1619
+90658,Hauge,Knut,mann,22941
+90659,Hauge,Kåre,mann,NA
+90660,Haugeland,Trygve,mann,40219
+90661,Haugen,Helga,kvinne,14897
+90662,Haugen,Ivar,mann,NA
+90663,Haugestad,NA,mann,NA
+90664,Hauglid,Ranja,kvinne,33585
+90665,Haus,Knut,mann,22942
+90666,Heggenhougen,Rolv,mann,NA
+90667,Heiberg,NA,mann,NA
+90668,Heilemann,Nils,mann,NA
+90669,Helland,Kjell Edvard,mann,22306
+90670,Helle,Ingvar Lars,mann,16926
+90671,Hellem,Rolf,mann,34349
+90672,Hellesø-Knutsen,Haakon Emil,mann,13570
+90673,Henriksen,Kai,mann,NA
+90674,Hermansen,Tormod,mann,NA
+90675,Hernes,Helga Marie,kvinne,NA
+90676,Hertzberg-Erichsen,Maren,kvinne,NA
+90677,Heum,Håkon,mann,NA
+90678,Heyerdahl,NA,mann,NA
+90679,Hillestad,Aksel Kristofer,mann,NA
+90680,Hindahl,Olav,mann,NA
+90681,Hirth,Eirik,mann,7851
+90682,Hjelde,Haakon,mann,NA
+90683,Hjelmtveit,Nils,mann,28521
+90684,Hjertenes,Dagfinn,mann,7480
+90685,Holemark,Sigurd,mann,35730
+90686,Holland,Arild,mann,NA
+90687,Holme,Nils,mann,NA
+90688,Holten,Odd,mann,29893
+90689,Holter,Tom,mann,NA
+90690,Holvik,Jan Tore,mann,NA
+90691,Holøs,Odd Steinar,mann,30025
+90693,Homme,Eivind,mann,NA
+90694,Horn,Wilhelm,mann,NA
+90695,Hovdenak,Gunnar,mann,NA
+90696,Hovengen,Åge,mann,41357
+90697,Hugaas,Einar,mann,8637
+90698,Huslid,Martin,mann,NA
+90699,Hågård,Oddbjørn,mann,30115
+90700,Hærum,NA,mann,NA
+90701,Høybråten,Dagfinn,mann,NA
+90702,Høybråten,Per,mann,32371
+90703,Ibsen,Tancred,mann,NA
+90704,Ihle,Geirmund,mann,11480
+90705,Ingeborgrud,Anne-Olaug,kvinne,2912
+90706,Ingebrigtsen,Karl,mann,21712
+90707,Ingebrigtsen,Oscar Andreas,mann,31404
+90708,Iversen,Bjørn,mann,NA
+90709,Iversen,Åsa Solberg,kvinne,41412
+90710,Jacobsen,Nils Kristen,mann,28563
+90711,Jakhelln,Carl Johan Fredrik,mann,NA
+90712,Jakobsen,Arnt-Jakob,mann,NA
+90713,Jakobsen,NA,mann,NA
+90714,Jensen,Bjørn,mann,6042
+90715,Jensen,Jentoft,mann,19051
+90716,Johannessen,Folke Hauger,mann,NA
+90717,Johannessen,Martha Frederikke,kvinne,27227
+90718,Johannessen,Olav Bucher,mann,NA
+90719,Johannessen,Terje,mann,NA
+90720,Johansen,Bengt O.,mann,NA
+90721,Johansen,Per Arne,mann,NA
+90722,Johnsen,Gunnar,mann,12433
+90723,Jordahl,Asbjørn Reidar,mann,4087
+90724,Jønsson,Gitta Lovise,kvinne,11710
+90725,Jørgensen,Brit,kvinne,6431
+90726,Jørstad,NA,mann,NA
+90727,Karstad,Arne,mann,NA
+90728,Karstensen,Per,mann,32406
+90729,Kirkeby,Odd,mann,29923
+90730,Kjønnøy,Gunnar,mann,NA
+90731,Klemsdal,Ole Frithjof,mann,31019
+90732,Klepsvik,Karsten,mann,NA
+90733,Knapp,Ole,mann,31119
+90734,Knudsen,Bård Bredrup,mann,NA
+90735,Knudsen,Grete,kvinne,11819
+90736,Knudson,Olaf,mann,30489
+90737,Knutzen,Thea,kvinne,38197
+90738,Koht,NA,mann,NA
+90739,Kolby,Ole Petter,mann,NA
+90740,Kolstad,NA,mann,NA
+90741,Koppernæs,Inger,kvinne,16451
+90742,Kosmo,Jørgen Hårek,mann,20434
+90743,Kristensen,Kjell Thorbjørn,mann,22530
+90744,Kristiansen,Georg,mann,NA
+90745,Kristiansen,Turid,kvinne,40344
+90746,Kristoffersen,Ivan,mann,NA
+90747,Krogh,Christian Fredrik von,mann,NA
+90748,Kvakkestad,Sverre,mann,NA
+90749,Kveli,Ola Hansen,mann,30352
+90750,Kvidal,Mary,kvinne,27396
+90751,Lambrechts,Finn,mann,NA
+90752,Langeland,Arne,mann,NA
+90753,Langeland,Olav Rasmussen,mann,30819
+90754,Langfeldt,NA,mann,NA
+90755,Larsen,Berit Brørby,kvinne,5189
+90756,Larsen,Birger,mann,NA
+90757,Larsen,Hjalmar,mann,15511
+90758,Laumann,Ingunn,kvinne,16854
+90759,Lefdal,Lars,mann,24426
+90760,Leikvoll,Atle,mann,NA
+90761,Leine,Johannes,mann,NA
+90762,Lian,Hans J. B.,mann,NA
+90763,Lian,Karin,kvinne,21590
+90764,Lie,Arne,mann,NA
+90765,Lindbæck,Odd,mann,NA
+90766,Lindebrække,Sjur,mann,36118
+90767,Lindstrøm,Bjarne,mann,NA
+90768,Lislerud,Johannes,mann,19469
+90769,Lisæth,Henrik Johan,mann,15179
+90770,Loen,Aud,kvinne,NA
+90771,Lofthaug,Olaf,mann,30758
+90772,Longva,Hans Wilhelm,mann,NA
+90773,Lorentzen,Annemarie,kvinne,2930
+90774,Ludvigsen,Sonja Aase,kvinne,36369
+90775,Ludvigsen,Svein,mann,37054
+90776,Lund,Arne Gunnar,mann,NA
+90777,Lund,Jenny,kvinne,18918
+90778,Lund,Olav,mann,30902
+90779,Lundbo,Sten,mann,NA
+90780,Lundby,Ole,mann,NA
+90781,Lunde,John A.,mann,NA
+90782,Lyngstad,Bjarne,mann,5642
+90783,Løchen,Einar,mann,NA
+90784,Løken,Harald,mann,NA
+90785,Løken,Johan Christen,mann,19179
+90786,Lønningdal,Kristin Kverneland,kvinne,23437
+90787,Løvald,Johan Ludvik,mann,NA
+90788,Løvold,Thomas,mann,NA
+90789,Magnus,Per Ludvig,mann,NA
+90790,Malterud,Otto Christian,mann,NA
+90791,Manshaus,Karl,mann,NA
+90792,Maribo,Steinar,mann,36601
+90793,Martinsen,Astrid Murberg,kvinne,4395
+90794,Mathisen,Ivar Kåre,mann,17198
+90795,Meier,Petter,mann,NA
+90796,Melander,Johan Arnt,mann,NA
+90797,Melchior,Arve,mann,NA
+90798,Mevik,Leif,mann,NA
+90799,Modalsli,NA,mann,NA
+90800,Moland,Arnfinn,mann,NA
+90801,Molvig,Finn,mann,NA
+90802,Morgenlien,Holm Sigvald,mann,15564
+90803,Mosnesset,Odvar,mann,NA
+90804,Motzfeldt,Birger Fredrik,mann,NA
+90805,Motzfeldt,NA,mann,NA
+90806,Myklebost,NA,mann,NA
+90807,Myklebust,Olav,mann,NA
+90808,Myklebust,NA,mann,NA
+90809,Mykstu,Gunnar,mann,12482
+90810,Mæland,Øystein,mann,NA
+90811,Mørkved,Knut,mann,NA
+90812,Neple,Harald,mann,NA
+90813,Nesmoen,Anne,kvinne,NA
+90816,Nilsen,Alfred Sigurd,mann,1480
+90817,Nilsen,Arne,mann,3462
+90818,Nielsen,Sivert Andreas,mann,NA
+90819,Nilssen,Lyder,mann,25660
+90820,Nilssen,Rolf,mann,34400
+90821,Nistad,Astrid Marie,kvinne,4385
+90822,Nomme,Fred,mann,NA
+90823,Norby,Reginald,mann,NA
+90824,Nordsletten,Øyvind,mann,NA
+90825,Nygaard,Enok,mann,NA
+90826,Nygaard,Leif Asbjørn,mann,NA
+90827,Nygaard,NA,mann,NA
+90828,Nyheim,Jan E.,mann,NA
+90829,Nylund,Ingrid,kvinne,16770
+90830,Nålsund,Jon Ivar,mann,NA
+90831,Nærstad,Henry,mann,NA
+90832,Næsheim,Peder Pedersen,mann,32130
+90833,Næss,Tor B.,mann,NA
+90834,Nævdal,NA,mann,NA
+90835,Olsen,Sven,mann,37238
+90836,Olsen-Hagen,Gunn Vigdis,kvinne,12297
+90837,Olstad,NA,mann,NA
+90838,Omreng,Helge,mann,NA
+90839,Opseth,Kjell,mann,22472
+90840,Owe,Christofer,mann,NA
+90841,Owe,Stein,mann,NA
+90842,Owe,Sven Østråt,mann,NA
+90843,Paulsen,Trond,mann,NA
+90844,Pedersen,Herman,mann,15305
+90845,Pedersen,Inger,kvinne,16533
+90846,Pedersen,Per Kristian,mann,NA
+90847,Pedersen,Sigurd,mann,35789
+90848,Plathe,Jon,mann,NA
+90849,Pran,Aage Rosenqvist,mann,NA
+90850,Presthus,Rolf,mann,34408
+90851,Raasok,Kjell,mann,NA
+90852,Ramm,Fredrik,mann,NA
+90853,Ramsrud,Peder Ingvaldsen,mann,32110
+90854,Randal,Håkon,mann,15673
+90855,Ranheim,Egil,mann,8446
+90856,Ravne,Per,mann,NA
+90857,Ravnåsen,Sigbjørn,mann,35429
+90858,Reed,Magne,mann,NA
+90859,Reinertsen,Trond Reimer,mann,NA
+90860,Reksten,Gunnar,mann,NA
+90861,Riise,NA,mann,NA
+90862,Rimereid,Tore Olav,mann,NA
+90863,Rindal,Arnt,mann,NA
+90864,Ringen,Asbjørn,mann,4089
+90865,Riseng,Øyvind,mann,NA
+90866,Risholm,Terje Halstein,mann,NA
+90867,Rivertz,NA,mann,NA
+90868,Roderburg,Elisabeth,kvinne,NA
+90869,Rognerud,Berte,kvinne,5400
+90870,Rognlien,Eivind Randers,mann,NA
+90871,Rogstad,Carl,mann,NA
+90872,Rosenvinge,Carsten E.,mann,NA
+90873,Rossen,Øyvind,mann,NA
+90874,Rudshagen,John H.,mann,NA
+90875,Rustad,NA,mann,NA
+90876,Råstad,Wenche Sand,kvinne,41092
+90877,Rødland,Arild,mann,3154
+90878,Røed,NA,mann,NA
+90879,Røkke,Mona,kvinne,27878
+90880,Rønbeck,Sissel,kvinne,36030
+90881,Rønning,Arnt,mann,NA
+90882,Sagelvmo,Almar,mann,NA
+90883,Sagør,Odd,mann,NA
+90884,Salvesen,Salve Andreas,mann,35248
+90885,Samuelsberg,Harald Nicolai,mann,14463
+90886,Samuelsen,Johan,mann,19324
+90887,Sandegren,Kaare,mann,NA
+90888,Sandvik,Øyvind,mann,NA
+90889,Sandvold,Tore,mann,NA
+90890,Saxrud,Gudmund,mann,NA
+90891,Schnitler,Gunvor Margaret,kvinne,12658
+90892,Schrøder,Martha,kvinne,27242
+90893,Schøyen,Per,mann,NA
+90894,Seland,Karstein,mann,35738
+90895,Sellæg,Johs.,mann,NA
+90896,Selmer,Erik,mann,NA
+90897,Selås,Harald,mann,14499
+90898,Sitje,Olav,mann,NA
+90899,Skadsem,NA,mann,NA
+90900,Skard,Torild,mann,39585
+90901,Skarstein,Asbjørn,mann,NA
+90902,Skartum,E.,mann,NA
+90903,Skau,Arne,mann,NA
+90904,Skjerven,Elsa Rigmor,kvinne,9532
+90905,Skogan,John Kristen,mann,NA
+90906,Skogen,Ketil,mann,22057
+90907,Skogmo,Bjørn,mann,NA
+90908,Skrondal,Anders Endreson,mann,1657
+90909,Skutle,Johan,mann,NA
+90910,Solberg,Erna,kvinne,10116
+90911,Solheim,Edvard Anderson,mann,8302
+90912,Solli,Bjarne Daniel,mann,5589
+90913,Sollie,Solveig,kvinne,36332
+90914,Solsem,Hans Mikal,mann,14164
+90915,Stang,NA,mann,NA
+90916,Stangholm,Bernt,mann,NA
+90917,Stensland,Leiv,mann,24919
+90918,Stephansen,Caspar,mann,NA
+90919,Sterri,Siri Frost,kvinne,35946
+90920,Stiksrud,Helge,mann,NA
+90921,Stoltenberg,Karin,kvinne,NA
+90922,Stomsvik,Steinar,mann,36628
+90923,Stordrange,Kolbjørn,mann,23188
+90924,Storhaug,Lars,mann,24526
+90925,Storhaug,NA,mann,NA
+90926,Strupe,Aage,mann,NA
+90927,Stub,Sverre,mann,NA
+90928,Stubberud,Liv,kvinne,25520
+90929,Stugu,NA,mann,NA
+90930,Styrvold,Svein,mann,NA
+90931,Støa,Johan,mann,19338
+90932,Støre,Jonas Gahr,mann,NA
+90933,Svedman,Sven Erik,mann,NA
+90934,Svennevig,Tormod Petter,mann,NA
+90935,Svensen,NA,mann,NA
+90936,Sverre,Knut,mann,NA
+90937,Sælthun,Ambjørg,kvinne,1565
+90938,Sæther,Svein,mann,NA
+90939,Sølvberg,Mathias,mann,NA
+90940,Sørbotten,Steinar,mann,NA
+90941,Sørbøe,Gustav,mann,NA
+90942,Tangen,NA,mann,NA
+90943,Thommesen,Alfred,mann,1477
+90944,Thorvik,Arve,mann,NA
+90945,Tidemann,Carl-Fredrik Michelet,mann,NA
+90946,Tjernsberg,Haldis,mann,13641
+90947,Toven,Knut,mann,23106
+90948,Traagstad,Knut,mann,NA
+90949,Trana,John Marius,mann,19649
+90950,Treholt,Arne,mann,NA
+90951,Tuseth,NA,mann,NA
+90952,Tveite,Per Sivle,mann,NA
+90953,Tvete,Wiktor,mann,NA
+90954,Tønne,Tore,mann,NA
+90955,Tøsdal,Margit,kvinne,26488
+90956,Udgaard,Nils Morten,mann,NA
+90957,Udjus,Ragnar,mann,33241
+90958,Ulland,Grete Ek,kvinne,NA
+90959,Ulland,Leif Arne,mann,NA
+90960,Ullmann,Ragnar,mann,33242
+90961,Ulsnæs,Thorvald,mann,38528
+90962,Ulstein,Egil,mann,NA
+90963,Unneberg,Bjørn,mann,6202
+90964,Urbye,Andreas Tostrup,mann,NA
+90965,Urstad,Hans Ola,mann,NA
+90966,Utkilen,Sigrid,kvinne,35655
+90967,Utne,Amund,mann,NA
+90968,Vaage,Roald,mann,NA
+90969,Vartdal,Knut,mann,23115
+90970,Vattekar,Odd,mann,30051
+90971,Vennemoe,Per,mann,NA
+90972,Verdal,Sigurd,mann,35783
+90973,Versto,Aslak Olavson,mann,4155
+90974,Vibe,Kjeld,mann,NA
+90975,Vik,Frithjov Meyer,mann,10929
+90976,Vik,NA,mann,NA
+90977,Vogt,NA,mann,NA
+90978,Vollebæk,Knut,mann,NA
+90979,Walnum,NA,mann,NA
+90980,Walther,Arne,mann,NA
+90981,Wang,Erling H.,mann,NA
+90982,Wang,Steinar,mann,NA
+90983,Westerlund,Carl Julius Alvin,mann,6929
+90984,Wetland,Morten,mann,NA
+90985,Wiig,Ole,mann,31302
+90986,Wikberg,Vidar,mann,NA
+90987,Wikholm,Marit,kvinne,27106
+90988,Winsnes,NA,mann,NA
+90989,With,Odd,mann,30072
+90990,Wroldsen,Ernst,mann,10141
+90991,Wåge,Arne,mann,NA
+90992,Ystgaard,Hans,mann,NA
+90993,Åkenes,Edmund,mann,NA
+90994,Ålgård,Ole,mann,NA
+90995,Aasland,Lasse,mann,NA
+90996,Øien,NA,mann,NA
+90997,Øisang,Ingebjørg,kvinne,16207
+90998,Ølberg,P. M.,mann,NA
+90999,Østern,Bjørn Frode,mann,NA
+91000,Østgaard,Hans O.,mann,NA
+91001,Øvregard,Kåre,mann,23829
+91002,Øyen,NA,mann,NA
+91003,Kolstad,Peder Ludvik,mann,32119
+91004,Larssen,Per,mann,NA
+91005,Lindboe,Asbjørn,mann,NA
+91006,Reimers,Otto George Jahn,mann,31531
+91007,Rygh,Peder Strand,mann,NA
+91008,Strand,Johan Martin Jakobsen,mann,19278
+91009,Aas,Hans,mann,NA
+91010,Fasmer,Hans Berent Forman,mann,12856
+91011,Langeland,Rasmus Olsen,mann,33630
+91012,Maastad,Andreas,mann,1885
+91013,Marstrander,Fredrik Kristian,mann,NA
+91014,Mohr,Wilhelm,mann,41167
+91015,Quisling,Vidkun Abraham Lauritz,mann,NA
+91016,Vik,Jacob Nilsson,mann,18218
+91017,Sunde,Arne,mann,3554
+91018,Andersen,Ove,mann,31627
+91019,Brevig,Ragnhild Adelheid,kvinne,33259
+91020,Jacobsen,Knut,mann,22972
+91021,Jakhelln,Christian Albrecht,mann,NA
+91022,Konow,Wollert,mann,NA
+91023,Muller,Oluf Christian,mann,31376
+91024,Scheflo,Olav Andreas,mann,30588
+91025,Tønder,Kristian Pedersen,mann,23345
+91026,Wolden,John Iversen,mann,19622
+91027,Storheill,Skule Valentin,mann,NA

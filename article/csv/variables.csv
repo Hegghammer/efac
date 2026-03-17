@@ -1,0 +1,29 @@
+Filename,Variable name,Data type,Description
+documents.csv,,,
+,filename,string,Basename path of PDF file.
+,meeting_id,integer,ID of meeting in PDF file.
+,date,string,Date of meeting in PDF file.
+,doctitle,string,Title of document as featured on the Stortinget.no website.
+,url,string,Download URL of PDF file. 
+,text,string,"Full, unparsed text of PDF file."
+attendees.csv,,,
+,meeting_id,integer,ID of meeting.
+,person_id,integer,ID of person.
+,chairman,boolean,Whether the person chaired the meeting; 0 or 1.
+,title,string,"Job title of person at time of meeting."
+,organization,string,"Job affiliation of person at time of meeting."
+,category,string,"Category of organization."
+,party,string,"Political party of person at time of meeting, where applicable."
+,spoke,boolean,"Whether the person spoke in the meeting; 0 or 1." 
+persons.csv,,,
+,person_id,integer,ID of person.
+,lastname,string,Last name of person.
+,firstname,string,First name of person; including middle name if applicable.
+,gender,string,Gender of person; "kvinne" or "mann".
+,pid,integer,"ID of person in the Fiva et al dataset, if available."
+remarks.csv,,,
+,meeting_id,integer,ID of meeting.
+,index,integer,Index of remark in the meeting’s sequence of remarks.
+,person_id,integer,ID of person.
+,remark,string,Text of remark.
+,lang,string,Language of remark; "nb" or "nn".
