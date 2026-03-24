@@ -1,16 +1,16 @@
 ---
 title: |
   Declassified transcripts from Norway's Extended Foreign Affairs Committee 1924–1992
-author:
-  - name: Thomas Hegghammer
-    corresponding: true
-    orcid: 0000-0001-6253-1518
-    email: thomas.hegghammer@all-souls.ox.ac.uk
-    affiliation: University of Oxford
-  - name: Målfrid Braut-Hegghammer
-    orcid: 0009-0005-5346-6001
-    email: malfrid.braut_hegghammer@kcl.ac.uk
-    affiliation: King's College London
+# author:
+#   - name: Thomas Hegghammer
+#     corresponding: true
+#     orcid: 0000-0001-6253-1518
+#     email: thomas.hegghammer@all-souls.ox.ac.uk
+#     affiliation: University of Oxford
+#   - name: Målfrid Braut-Hegghammer
+#     orcid: 0009-0005-5346-6001
+#     email: malfrid.braut_hegghammer@kcl.ac.uk
+#     affiliation: King's College London
 date: today
 date-format: D MMMM YYYY
 abstract-title: "Abstract:"
@@ -26,6 +26,9 @@ csl: nature.csl
 link-citations: true
 format:
   pdf: 
+    author:
+      - 'Thomas Hegghammer\thanks{Corresponding author. Email: \href{mailto:thomas.hegghammer@all-souls.ox.ac.uk}{thomas.hegghammer@all-souls.ox.ac.uk}.}'
+      - "Målfrid Braut-Hegghammer"
     pdf-engine: pdflatex
     toc: false
     keep-tex: true
@@ -62,6 +65,9 @@ format:
       text: |
         \newpage
   typst:
+    author:
+      - "Thomas Hegghammer^[Corresponding author. Email: [thomas.hegghammer@all-souls.ox.ac.uk](mailto:thomas.hegghammer@all-souls.ox.ac.uk).]"
+      - "Målfrid Braut-Hegghammer"
     citeproc: true
     toc: false
     include-in-header: 
